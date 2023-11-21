@@ -1,6 +1,31 @@
 <!-- @format -->
 
 <template>
+	<theHeader class="container items-center">
+		<template v-slot:logo>
+			<img
+				class=""
+				src="/src/assets/img/home/logo.png"
+				alt="logo" />
+			<h1 class="font-bold tracking-wide whitespace-nowrap">my Dream place</h1>
+		</template>
+		<template v-slot:nav>
+			<navLink />
+		</template>
+		<template v-slot:button>
+			<router-link
+				class="btn px-3 py-2"
+				:to="{ name: 'register' }"
+				>Register</router-link
+			>
+			<router-link
+				class="btn px-3 py-2"
+				:to="{ name: 'signIn' }"
+				>Sign In</router-link
+			>
+		</template>
+	</theHeader>
+
 	<main class="container">
 		<div class="landing relative py-2">
 			<div class="image"
@@ -20,7 +45,7 @@
 				>
 			</div>
 		</div>
-		<searchBar />
+		<searchBar class="relative top-[-50px] w-[80%]" />
 		<worningLetter />
 		<yourVacation />
 		<nextTrip />
@@ -32,10 +57,13 @@
 			>
 			<p class="text-main-color text-lg">Discover new places and experiences</p>
 		</section>
-		<theFooter />
 	</main>
+	<theFooter class="container" />
 </template>
 <script setup>
+	import theHeader from '../../components/theHeader.vue';
+	import navLink from '../../components/navLink.vue';
+
 	import searchBar from '../../components/searchBar.vue';
 	import worningLetter from './component/worningLetter.vue';
 	import yourVacation from './component/yourVacation.vue';

@@ -1,16 +1,20 @@
-<!-- @format -->
 
 <template>
 	<footer class="mt-[70px]">
 		<section class="grid grid-cols-5 gap-3">
-			<div class="logoPart">
-				<div class="logo flex items-center gap-2">
+			<div class="logoPart flex gap-2">
+				<div class="logo">
 					<img
-						src="/src/assets/img/home/logo.png"
-						alt="loho" />
-					<h3>my Dream Place</h3>
+						class=""
+						src="../assets/img/home/logo.png"
+						alt="logo" />
 				</div>
-				<p>Your next goto companion for travel</p>
+				<div class="text flex-1">
+					<h2 class="font-semibold whitespace-nowrap mb-2">my Dream place</h2>
+					<p class="text-text-color text-xs"
+						>Your next goto companion for travel</p
+					></div
+				>
 			</div>
 			<div class="companyPart">
 				<h3>Company</h3>
@@ -54,8 +58,9 @@
 				</ul>
 			</div>
 		</section>
-		<section class="copyRight flex justify-end">
-			<p>&copy; my Dream Place 2022</p>
+		<section class="copyRight bg-gray-100 text-text-color flex justify-around">
+			<p></p>
+			<p class="text-sm py-2">&copy; my Dream Place 2022</p>
 		</section>
 	</footer>
 </template>
@@ -63,10 +68,9 @@
 <script setup></script>
 <style scoped>
 	h3 {
-		@apply font-semibold mb-6;
+		@apply font-semibold mb-4;
 	}
 	li {
-		@apply text-text-color text-xs mb-4;
-		white-space: nowrap;
+		@apply text-text-color text-xs mb-4 cursor-pointer whitespace-nowrap;
 	}
 </style>

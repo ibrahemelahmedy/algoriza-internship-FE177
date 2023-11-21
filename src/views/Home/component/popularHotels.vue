@@ -1,4 +1,3 @@
-<!-- @format -->
 
 <template>
 	<section class="flex flex-col my-[50px]">

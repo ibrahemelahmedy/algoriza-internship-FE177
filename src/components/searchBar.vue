@@ -1,10 +1,9 @@
-<!-- @format -->
 
 <template>
-	<article class="relative top-[-50px] w-[80%] m-auto shadow-md">
+	<article class=" m-auto shadow-md rounded-lg">
 		<form
 			@click.prevent
-			class="bg-white grid gap-3 rounded-xl p-4 grid-cols-[200px_repeat(5,112px)]">
+			class="bg-white grid gap-3 rounded-xl py-3 px-4 grid-cols-[200px_repeat(5,112px)]">
 			<div class="search-handel country">
 				<label for="country"
 					><svg
@@ -266,3 +265,17 @@
 </template>
 
 <script setup></script>
+<style scoped>
+	.search-handel {
+		@apply py-2 px-3 flex gap-2 items-center bg-gray-bg rounded-md;
+	}
+	.search-handel input {
+		@apply bg-transparent w-full;
+	}
+	.search-handel input::placeholder {
+		@apply text-xs text-text-color font-semibold;
+	}
+	.search-handel input:focus {
+		@apply outline-none;
+	}
+</style>

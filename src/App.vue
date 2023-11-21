@@ -1,7 +1,6 @@
 <!-- @format -->
 
 <template>
-	<theHeader />
 	<RouterView />
 </template>
 
