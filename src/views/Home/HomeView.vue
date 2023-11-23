@@ -3,26 +3,48 @@
 <template>
 	<theHeader class="container items-center">
 		<template v-slot:logo>
-			<img
-				class=""
-				src="/src/assets/img/home/logo.png"
-				alt="logo" />
-			<h1 class="font-bold tracking-wide whitespace-nowrap">my Dream place</h1>
+			<RouterLink
+				class="cursor-pointer flex gap-1"
+				:to="{ name: 'home' }">
+				<img
+					src="/src/assets/img/home/logo.png"
+					alt="logo" />
+				<h1 class="font-medium tracking-wide whitespace-nowrap"
+					>my Dream place</h1
+				>
+			</RouterLink>
 		</template>
 		<template v-slot:nav>
 			<navLink />
 		</template>
 		<template v-slot:button>
-			<router-link
-				class="btn px-3 py-2"
-				:to="{ name: 'register' }"
-				>Register</router-link
-			>
-			<router-link
-				class="btn px-3 py-2"
-				:to="{ name: 'signIn' }"
-				>Sign In</router-link
-			>
+			<div
+				v-if="!isAuth"
+				class="flex gap-4">
+				<router-link
+					class="btn px-3 py-2"
+					:to="{ name: 'register' }"
+					>Register</router-link
+				>
+				<router-link
+					class="btn px-3 py-2"
+					:to="{ name: 'signIn' }"
+					>Sign In</router-link
+				>
+			</div>
+
+			<div
+				v-else
+				class="flex gap-4">
+				<img
+					class="cursor-pointer"
+					src="/src/assets/img/home/notification 1.svg"
+					alt="notification" />
+				<img
+					class="cursor-pointer"
+					src="/src/assets/img/booking/header/profile-image.png"
+					alt="profileimage" />
+			</div>
 		</template>
 	</theHeader>
 
@@ -61,6 +83,7 @@
 	<theFooter class="container" />
 </template>
 <script setup>
+	import { ref } from 'vue';
 	import theHeader from '../../components/theHeader.vue';
 	import navLink from '../../components/navLink.vue';
 
@@ -71,4 +94,26 @@
 	import popularHotels from './component/popularHotels.vue';
 	import appDowenload from './component/appDowenload.vue';
 	import theFooter from '../../components/theFooter.vue';
+	import { useRoute } from 'vue-router';
+	const route = useRoute();
+	const isAuth = ref(false);
+	isAuth.value = route.query.isAuth;
+
+	// const auth = ref([]);
+	// const error = ref(null);
+	// const getAuth = async () => {
+	// 	try {
+	// 		let data = await fetch('http://localhost:3000/auth');
+	// 		if (!data.ok) {
+	// 			isAuth.value = false;
+	// 			throw Error('notAuth');
+	// 		}
+	// 		auth.value = data.json();
+	// 	} catch (err) {
+	// 		error.value = err.message;
+	// 		console.log(error.value);
+	// 	}
+	// };
+	// getAuth();
+	// console.log(auth.value);
 </script>

@@ -1,3 +1,4 @@
+<!-- @format -->
 
 <template>
 	<header class="flex justify-between py-4">
@@ -7,7 +8,7 @@
 		<nav class="">
 			<slot name="nav"> </slot>
 		</nav>
-		<div class="buttons flex gap-4">
+		<div class="buttons">
 			<slot name="button"></slot>
 		</div>
 	</header>

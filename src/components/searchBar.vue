@@ -1,6 +1,7 @@
+<!-- @format -->
 
 <template>
-	<article class=" m-auto shadow-md rounded-lg">
+	<article class="m-auto shadow-md rounded-lg">
 		<form
 			@click.prevent
 			class="bg-white grid gap-3 rounded-xl py-3 px-4 grid-cols-[200px_repeat(5,112px)]">
@@ -22,12 +23,28 @@
 							stroke-width="1.5" />
 					</svg>
 				</label>
-				<input
-					type="text"
-					id="country"
-					name="country"
-					placeholder="Where are you going?" />
+				<select
+					name="egypt"
+					id="egypt">
+					<option
+						value=""
+						disabled
+						selected
+						hidden
+						class="text-xs text-text-color font-semibold"
+						><p cclass="text-xs text-text-color font-semibold"
+							>Where are you going?</p
+						></option
+					>
+					<option
+						:value="city"
+						v-for="city in cities"
+						:key="city"
+						>{{ city.name }}</option
+					>
+				</select>
 			</div>
+
 			<div class="search-handel time-start">
 				<label for="timeStart"
 					><svg
@@ -102,11 +119,11 @@
 							stroke-linejoin="round" />
 					</svg>
 				</label>
-				<input
-					type="date"
-					id="timeStart"
-					name="timeStart"
-					placeholder="Check in date" />
+				<VueDatePicker
+					placeholder="Check in date"
+					class="datePicher"
+					v-model="dateIn"
+					hide-input-icon></VueDatePicker>
 			</div>
 			<div class="search-handel time-end">
 				<label for="timeEnd"
@@ -182,11 +199,11 @@
 							stroke-linejoin="round" />
 					</svg>
 				</label>
-				<input
-					type="date"
-					id="timeEnd"
-					name="timeEnd"
-					placeholder="Check out date" />
+				<VueDatePicker
+					placeholder="Check out date"
+					class="datePicher"
+					v-model="dateOut"
+					hide-input-icon></VueDatePicker>
 			</div>
 			<div class="search-handel guests-num">
 				<label for="guestsNum"
@@ -264,17 +281,49 @@
 	</article>
 </template>
 
-<script setup></script>
+<script setup>
+	import { ref } from 'vue';
+	import { useTaskStore } from '../stores/store';
+	const taskStore = useTaskStore();
+
+	// city
+	const cities = ref([]);
+	const dataCities = async () => {
+		const data = await taskStore.egyptCities();
+		const searchCity = data.egyptCitiesHotel.data.filter(
+			(data) => data.search_type !== 'country',
+		);
+		for (let i = 0; i < searchCity.length; i++) {
+			cities.value.push(searchCity[i]);
+		}
+		return cities;
+	};
+	dataCities();
+
+	// date
+	const dateIn = ref('');
+	const dateOut = ref('');
+</script>
 <style scoped>
 	.search-handel {
 		@apply py-2 px-3 flex gap-2 items-center bg-gray-bg rounded-md;
 	}
+	.search-handel select,
 	.search-handel input {
-		@apply bg-transparent w-full;
+		@apply bg-transparent w-full cursor-pointer;
 	}
+	.datePicher div.dp__input_wrap {
+		@apply bg-transparent
+		w-full 
+		cursor-pointer;
+	}
+	.datePicher div div.dp__input_wrap {
+	}
+
 	.search-handel input::placeholder {
 		@apply text-xs text-text-color font-semibold;
 	}
+	.search-handel select:focus,
 	.search-handel input:focus {
 		@apply outline-none;
 	}

@@ -3,19 +3,23 @@
 <template>
 	<theHeader class="container items-center">
 		<template v-slot:logo>
-			<img
-				class=""
-				src="/src/assets/img/home/logo.png"
-				alt="logo" />
-			<h1 class="font-medium tracking-wide whitespace-nowrap"
-				>my Dream place</h1
-			>
+			<RouterLink
+				class="cursor-pointer flex gap-1"
+				:to="{ name: 'home' }">
+				<img
+					class=""
+					src="/src/assets/img/home/logo.png"
+					alt="logo" />
+				<h1 class="font-medium tracking-wide whitespace-nowrap"
+					>my Dream place</h1
+				>
+			</RouterLink>
 		</template>
 	</theHeader>
 	<main class="h-[100vh] mt-[80px]">
 		<article class="mx-auto w-[400px]">
 			<h1 class="text-2xl font-semibold text-center mb-12">Sign in</h1>
-			<form @submit.prevent>
+			<form @submit.prevent="submitForm">
 				<div class="email flex flex-col">
 					<label
 						for="email"
@@ -27,7 +31,7 @@
 						name="email"
 						id="email"
 						placeholder="Email adress"
-						v-model="email" />
+						v-model.trim="email" />
 				</div>
 				<div class="password">
 					<label
@@ -41,7 +45,7 @@
 							name="password"
 							id="password"
 							placeholder="Enter Password"
-							v-model="password" />
+							v-model.trim="password" />
 
 						<svg
 							class="absolute cursor-pointer top-[25%] right-2"
@@ -65,8 +69,22 @@
 						</svg>
 					</div>
 				</div>
-
-				<button class="btn w-full py-2 text-center mb-6">Sign in </button>
+				<p
+					v-if="!formIsValid"
+					class="text-red-600">
+					Pleace enter the valid email and password (must be at least 6
+					characters long)
+				</p>
+				<p
+					v-if="!emailValid"
+					class="text-red-600">
+					this Email Not Exist
+				</p>
+				<button
+					type="submit"
+					class="btn w-full py-2 text-center mb-6"
+					>Sign in
+				</button>
 			</form>
 			<div class="flex justify-center gap-1">
 				<p class="">Don’t have an account? </p>
@@ -82,10 +100,49 @@
 
 <script setup>
 	import { ref } from 'vue';
+	import { useRouter } from 'vue-router';
 	import theHeader from '../../components/theheader.vue';
 
 	const email = ref('');
 	const password = ref('');
+	const emailValid = ref(true);
+	const isAuth = ref(false);
+	const formIsValid = ref(true);
+
+	const submitForm = () => {
+		formIsValid.value = true;
+
+		if (
+			email.value === '' ||
+			!email.value.includes('@') ||
+			password.value.length < 6
+		) {
+			formIsValid.value = false;
+
+			return;
+		} else if (
+			JSON.parse(localStorage.getItem('userEmail')) !== email.value ||
+			JSON.parse(localStorage.getItem('userPassword')) !== password.value
+		) {
+			emailValid.value = false;
+			isAuth.value = false;
+		} else {
+			emailValid.value = true;
+			isAuth.value = true;
+			const redirectRouter = () => {
+				if (isAuth) {
+					router.push({
+						name: 'home',
+						query: {
+							isAuth: isAuth.value,
+						},
+					});
+				}
+			};
+			redirectRouter();
+		}
+	};
+	const router = useRouter();
 </script>
 
 <style scoped>
