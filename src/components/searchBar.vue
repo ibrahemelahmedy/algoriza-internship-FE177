@@ -4,289 +4,175 @@
 	<article class="m-auto shadow-md rounded-lg">
 		<form
 			@click.prevent
-			class="bg-white grid gap-3 rounded-xl py-3 px-4 grid-cols-[200px_repeat(5,112px)]">
+			class="bg-white grid gap-3 rounded-xl py-3 px-4 grid-cols-[200px_repeat(5,130px)]">
 			<div class="search-handel country">
 				<label for="country"
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="20"
-						height="20"
-						viewBox="0 0 20 20"
-						fill="none">
-						<path
-							d="M9.9999 11.1917C10.3413 11.1917 10.6794 11.1244 10.9949 10.9938C11.3103 10.8631 11.5969 10.6716 11.8384 10.4302C12.0798 10.1887 12.2713 9.90212 12.402 9.58668C12.5327 9.27123 12.5999 8.93314 12.5999 8.5917C12.5999 8.25026 12.5327 7.91217 12.402 7.59672C12.2713 7.28128 12.0798 6.99465 11.8384 6.75322C11.5969 6.51179 11.3103 6.32027 10.9949 6.18961C10.6794 6.05895 10.3413 5.9917 9.9999 5.9917C9.31034 5.9917 8.64902 6.26563 8.16142 6.75322C7.67383 7.24082 7.3999 7.90214 7.3999 8.5917C7.3999 9.28126 7.67383 9.94258 8.16142 10.4302C8.64902 10.9178 9.31034 11.1917 9.9999 11.1917V11.1917Z"
-							stroke="#828282"
-							stroke-width="1.5" />
-						<path
-							d="M3.01675 7.07508C4.65842 -0.141583 15.3501 -0.13325 16.9834 7.08342C17.9417 11.3168 15.3084 14.9001 13.0001 17.1168C12.1935 17.8947 11.1165 18.3294 9.99592 18.3294C8.87529 18.3294 7.79835 17.8947 6.99175 17.1168C4.69175 14.9001 2.05842 11.3084 3.01675 7.07508V7.07508Z"
-							stroke="#828282"
-							stroke-width="1.5" />
-					</svg>
+					><img
+						class="cursor-pointer w-[20px]"
+						src="/src/assets/img/searchBar/location 1.svg"
+						alt="location" />
 				</label>
-				<select
-					name="egypt"
-					id="egypt">
-					<option
-						value=""
-						disabled
-						selected
-						hidden
-						class="text-xs text-text-color font-semibold"
-						><p cclass="text-xs text-text-color font-semibold"
-							>Where are you going?</p
-						></option
-					>
-					<option
-						:value="city"
-						v-for="city in cities"
-						:key="city"
-						>{{ city.name }}</option
-					>
-				</select>
+				<div class="custom-select">
+					<select
+						name="egypt"
+						id="country"
+						class="text-[11px] font-normal"
+						v-model="cityName">
+						<option
+							value=""
+							disabled
+							selected
+							hidden>
+							Where are you going?</option
+						>
+						<option
+							:value="city"
+							v-for="city in cities"
+							:key="city"
+							>{{ city.name }}</option
+						>
+					</select>
+				</div>
 			</div>
 
 			<div class="search-handel time-start">
-				<label for="timeStart"
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="20"
-						height="20"
-						viewBox="0 0 20 20"
-						fill="none">
-						<path
-							d="M6.6665 1.66675V4.16675"
-							stroke="#828282"
-							stroke-width="1.5"
-							stroke-miterlimit="10"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M13.3335 1.66675V4.16675"
-							stroke="#828282"
-							stroke-width="1.5"
-							stroke-miterlimit="10"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M2.9165 7.5752H17.0832"
-							stroke="#828282"
-							stroke-width="1.5"
-							stroke-miterlimit="10"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M17.5 7.08341V14.1667C17.5 16.6667 16.25 18.3334 13.3333 18.3334H6.66667C3.75 18.3334 2.5 16.6667 2.5 14.1667V7.08341C2.5 4.58341 3.75 2.91675 6.66667 2.91675H13.3333C16.25 2.91675 17.5 4.58341 17.5 7.08341Z"
-							stroke="#828282"
-							stroke-width="1.5"
-							stroke-miterlimit="10"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M13.0791 11.4167H13.0866"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M13.0791 13.9167H13.0866"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M9.99561 11.4167H10.0039"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M9.99561 13.9167H10.0039"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M6.91162 11.4167H6.91995"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M6.91162 13.9167H6.91995"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-					</svg>
+				<label>
+					<img
+						class="cursor-pointer w-[25px]"
+						src="/src/assets/img/searchBar/calendar 1.svg"
+						alt="calender" />
 				</label>
 				<VueDatePicker
+					:format="format"
+					@blur="onchang"
 					placeholder="Check in date"
 					class="datePicher"
-					v-model="dateIn"
+					v-model="arrival_date"
 					hide-input-icon></VueDatePicker>
 			</div>
+
 			<div class="search-handel time-end">
-				<label for="timeEnd"
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="20"
-						height="20"
-						viewBox="0 0 20 20"
-						fill="none">
-						<path
-							d="M6.6665 1.66675V4.16675"
-							stroke="#828282"
-							stroke-width="1.5"
-							stroke-miterlimit="10"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M13.3335 1.66675V4.16675"
-							stroke="#828282"
-							stroke-width="1.5"
-							stroke-miterlimit="10"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M2.9165 7.5752H17.0832"
-							stroke="#828282"
-							stroke-width="1.5"
-							stroke-miterlimit="10"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M17.5 7.08341V14.1667C17.5 16.6667 16.25 18.3334 13.3333 18.3334H6.66667C3.75 18.3334 2.5 16.6667 2.5 14.1667V7.08341C2.5 4.58341 3.75 2.91675 6.66667 2.91675H13.3333C16.25 2.91675 17.5 4.58341 17.5 7.08341Z"
-							stroke="#828282"
-							stroke-width="1.5"
-							stroke-miterlimit="10"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M13.0791 11.4167H13.0866"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M13.0791 13.9167H13.0866"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M9.99561 11.4167H10.0039"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M9.99561 13.9167H10.0039"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M6.91162 11.4167H6.91995"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-						<path
-							d="M6.91162 13.9167H6.91995"
-							stroke="#828282"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round" />
-					</svg>
+				<label
+					><img
+						class="cursor-pointer w-[25px]"
+						src="/src/assets/img/searchBar/calendar 1.svg"
+						alt="calender" />
 				</label>
 				<VueDatePicker
+					:format="format"
+					@blur="onchang"
 					placeholder="Check out date"
 					class="datePicher"
-					v-model="dateOut"
+					v-model="departure_date"
 					hide-input-icon></VueDatePicker>
 			</div>
 			<div class="search-handel guests-num">
-				<label for="guestsNum"
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="20"
-						height="20"
-						viewBox="0 0 20 20"
-						fill="none">
-						<g clip-path="url(#clip0_402_70)">
-							<path
-								d="M15.1166 18.0168C14.3833 18.2335 13.5166 18.3335 12.5 18.3335H7.49997C6.4833 18.3335 5.61663 18.2335 4.8833 18.0168C5.06663 15.8502 7.29163 14.1418 9.99997 14.1418C12.7083 14.1418 14.9333 15.8502 15.1166 18.0168V18.0168Z"
-								stroke="#828282"
-								stroke-width="1.5"
-								stroke-linecap="round"
-								stroke-linejoin="round" />
-							<path
-								d="M12.4998 1.66675H7.49984C3.33317 1.66675 1.6665 3.33341 1.6665 7.50008V12.5001C1.6665 15.6501 2.6165 17.3751 4.88317 18.0167C5.0665 15.8501 7.2915 14.1417 9.99984 14.1417C12.7082 14.1417 14.9332 15.8501 15.1165 18.0167C17.3832 17.3751 18.3332 15.6501 18.3332 12.5001V7.50008C18.3332 3.33341 16.6665 1.66675 12.4998 1.66675ZM9.99984 11.8084C8.34984 11.8084 7.0165 10.4667 7.0165 8.81675C7.0165 7.16675 8.34984 5.83341 9.99984 5.83341C11.6498 5.83341 12.9832 7.16675 12.9832 8.81675C12.9832 10.4667 11.6498 11.8084 9.99984 11.8084Z"
-								stroke="#828282"
-								stroke-width="1.5"
-								stroke-linecap="round"
-								stroke-linejoin="round" />
-							<path
-								d="M12.9833 8.81683C12.9833 10.4668 11.6499 11.8085 9.99993 11.8085C8.34993 11.8085 7.0166 10.4668 7.0166 8.81683C7.0166 7.16683 8.34993 5.8335 9.99993 5.8335C11.6499 5.8335 12.9833 7.16683 12.9833 8.81683Z"
-								stroke="#828282"
-								stroke-width="1.5"
-								stroke-linecap="round"
-								stroke-linejoin="round" />
-						</g>
-						<defs>
-							<clipPath id="clip0_402_70">
-								<rect
-									width="20"
-									height="20"
-									fill="white" />
-							</clipPath>
-						</defs>
-					</svg>
+				<label for="guestsNum">
+					<img
+						class="cursor-pointer w-[25px]"
+						src="/src/assets/img/searchBar/user-square 1.svg"
+						alt="calender" />
 				</label>
 				<input
-					type="number"
+					@blur="checkGest"
+					type="text"
 					id="guestsNum"
 					name="guestsNum"
-					placeholder="Guests" />
+					placeholder="Guests"
+					v-model.trim="guestNum" />
 			</div>
 			<div class="search-handel rooms-num">
-				<label for="roomsNum"
-					><svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none">
-						<path
-							d="M7.4375 17H6.625L6.09687 15.4286H5V11.4804C5 11.0482 5.15911 10.6815 5.47734 10.3804C5.79557 10.0792 6.17812 9.92857 6.625 9.92857V7.57143C6.625 7.13929 6.78411 6.76935 7.10234 6.46161C7.42057 6.15387 7.80312 6 8.25 6H14.75C15.1969 6 15.5794 6.15387 15.8977 6.46161C16.2159 6.76935 16.375 7.13929 16.375 7.57143V9.92857C16.8219 9.92857 17.2044 10.0824 17.5227 10.3902C17.8409 10.6979 18 11.0679 18 11.5V15.4286H16.9031L16.375 17H15.5625L15.0344 15.4286H7.96562L7.4375 17ZM12.3125 9.92857H14.75V7.57143H12.3125V9.92857ZM8.25 9.92857H10.6875V7.57143H8.25V9.92857ZM6.625 13.8571H16.375V11.5H6.625V13.8571Z"
-							fill="#828282" />
-						<rect
-							x="2.75"
-							y="2.75"
-							width="17.5"
-							height="17.5"
-							rx="5.25"
-							stroke="#828282"
-							stroke-width="1.5" />
-					</svg>
+				<label for="roomsNum">
+					<img
+						class="cursor-pointer w-[25px]"
+						src="/src/assets/img/searchBar/room.svg"
+						alt="calender" />
 				</label>
 				<input
-					type="number"
+					@blur="checkRoom"
+					type="text"
 					id="roomsNum"
 					name="roomsNum"
-					placeholder="Rooms" />
+					placeholder="Rooms"
+					v-model.trim="roomNum" />
 			</div>
-			<button class="btn">Search</button>
+			<button
+				class="btn"
+				@click="searchHandel"
+				>Search</button
+			>
+			<div
+				class="flex flex-col"
+				v-if="!allCheckWell">
+				<p
+					v-if="!chechDate"
+					class="text-[10px] text-red-500 whitespace-nowrap">
+					Look at date again (target day after today and the check out after
+					previous date )</p
+				>
+				<p
+					v-if="!checkGestNum"
+					class="text-[10px] text-red-500 whitespace-nowrap">
+					at least 1 Gest
+				</p>
+				<p
+					v-if="!checkRoomNum"
+					class="text-[10px] text-red-500 whitespace-nowrap">
+					at least 1 Room
+				</p>
+			</div>
 		</form>
 	</article>
 </template>
 
 <script setup>
-	import { ref } from 'vue';
+	import { computed, ref, defineProps } from 'vue';
+	import { useRouter } from 'vue-router';
 	import { useTaskStore } from '../stores/store';
 	const taskStore = useTaskStore();
+	const roomNum = ref('');
+	const guestNum = ref('');
+	const cityName = ref('');
+	const arrival_date = ref('');
+	const departure_date = ref('');
+	const allCheckWell = ref(true);
 
-	// city
+	// error msg handel
+	const chechDate = ref(true);
+	const onchang = computed(() => {
+		const now = new Date();
+		const dateIn = new Date(arrival_date.value);
+		const dateOut = new Date(departure_date.value);
+		chechDate.value = true;
+		allCheckWell.value = true;
+
+		if (now > dateIn || now > dateOut || dateIn > dateOut) {
+			chechDate.value = false;
+			allCheckWell.value = false;
+		}
+	});
+	const checkGestNum = ref(true);
+	const checkGest = computed(() => {
+		checkGestNum.value = true;
+		allCheckWell.value = false;
+
+		if (guestNum.value <= '0') {
+			checkGestNum.value = false;
+			allCheckWell.value = false;
+		}
+	});
+	const checkRoomNum = ref(true);
+	const checkRoom = computed(() => {
+		checkRoomNum.value = true;
+		allCheckWell.value = true;
+
+		if (roomNum.value <= '0') {
+			checkRoomNum.value = false;
+			allCheckWell.value = false;
+		}
+	});
+
+	// handel city from api
 	const cities = ref([]);
 	const dataCities = async () => {
 		const data = await taskStore.egyptCities();
@@ -298,26 +184,63 @@
 		}
 		return cities;
 	};
+
 	dataCities();
 
-	// date
-	const dateIn = ref('');
-	const dateOut = ref('');
+	// handleDate
+	// In case of a range picker, you'll receive [Date, Date]
+	const format = (date) => {
+		const day = date.getDate();
+		const month = date.getMonth() + 1;
+		const year = date.getFullYear();
+		return `${day}/${month}/${year}`;
+	};
+
+	//  send data with route
+	const router = useRouter();
+	const { isAuth } = defineProps(['isAuth']);
+	const searchHandel = () => {
+		if (
+			cityName.value !== '' &&
+			arrival_date.value !== '' &&
+			departure_date.value !== '' &&
+			guestNum.value !== '' &&
+			roomNum.value !== '' &&
+			isAuth
+		) {
+			router.push({
+				name: 'booking',
+				query: {
+					cityName: cityName.value,
+					arrival_date: arrival_date.value,
+					departure_date: departure_date.value,
+					guestNum: guestNum.value,
+					roomNum: roomNum.value,
+					isAuth: isAuth,
+				},
+			});
+		} else if (!isAuth) {
+			router.push({
+				name: 'signIn',
+			});
+		}
+	};
+
+	// const chosenCity = () => {
+	// 	console.log(cityName.value);
+	// 	console.log(arrival_date.value);
+	// 	console.log(departure_date.value);
+	// 	console.log(`${guestNum.value} gest`);
+	// 	console.log(`${roomNum.value} room`);
+	// };
 </script>
-<style scoped>
+<style>
 	.search-handel {
-		@apply py-2 px-3 flex gap-2 items-center bg-gray-bg rounded-md;
+		@apply py-1 px-2 flex gap-1 items-center bg-gray-bg rounded-md;
 	}
 	.search-handel select,
 	.search-handel input {
-		@apply bg-transparent w-full cursor-pointer;
-	}
-	.datePicher div.dp__input_wrap {
-		@apply bg-transparent
-		w-full 
-		cursor-pointer;
-	}
-	.datePicher div div.dp__input_wrap {
+		@apply bg-transparent w-full cursor-pointer border-none text-[11px] font-normal p-0;
 	}
 
 	.search-handel input::placeholder {
@@ -327,4 +250,6 @@
 	.search-handel input:focus {
 		@apply outline-none;
 	}
+
+	/* select box style */
 </style>

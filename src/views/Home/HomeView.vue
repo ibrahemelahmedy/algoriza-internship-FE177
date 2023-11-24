@@ -1,6 +1,11 @@
 <!-- @format -->
 
 <template>
+	<Teleport
+		v-if="isAuth"
+		to="body">
+		<theDialog :isAuth="isAuth" />
+	</Teleport>
 	<theHeader class="container items-center">
 		<template v-slot:logo>
 			<RouterLink
@@ -67,7 +72,9 @@
 				>
 			</div>
 		</div>
-		<searchBar class="relative top-[-50px] w-[80%]" />
+		<searchBar
+			:isAuth="isAuth"
+			class="relative top-[-50px] w-[89%]" />
 		<worningLetter />
 		<yourVacation />
 		<nextTrip />
@@ -84,6 +91,7 @@
 </template>
 <script setup>
 	import { ref } from 'vue';
+	import theDialog from '../../components/theDialog.vue';
 	import theHeader from '../../components/theHeader.vue';
 	import navLink from '../../components/navLink.vue';
 
@@ -97,23 +105,5 @@
 	import { useRoute } from 'vue-router';
 	const route = useRoute();
 	const isAuth = ref(false);
-	isAuth.value = route.query.isAuth;
-
-	// const auth = ref([]);
-	// const error = ref(null);
-	// const getAuth = async () => {
-	// 	try {
-	// 		let data = await fetch('http://localhost:3000/auth');
-	// 		if (!data.ok) {
-	// 			isAuth.value = false;
-	// 			throw Error('notAuth');
-	// 		}
-	// 		auth.value = data.json();
-	// 	} catch (err) {
-	// 		error.value = err.message;
-	// 		console.log(error.value);
-	// 	}
-	// };
-	// getAuth();
-	// console.log(auth.value);
+	isAuth.value = route.query.isAuth || false;
 </script>

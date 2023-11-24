@@ -18,18 +18,20 @@
 			<navLink class="text-white" />
 		</template>
 		<template v-slot:button>
-			<img
-				class="cursor-pointer"
-				src="/src/assets/img/booking/header/notification.svg"
-				alt="notification" />
-			<img
-				class="cursor-pointer"
-				src="/src/assets/img/booking/header/profile-image.png"
-				alt="profileimage" />
+			<div class="flex gap-4">
+				<img
+					class="cursor-pointer"
+					src="/src/assets/img/booking/header/notification.svg"
+					alt="notification" />
+				<img
+					class="cursor-pointer"
+					src="/src/assets/img/booking/header/profile-image.png"
+					alt="profileimage" />
+			</div>
 		</template>
 	</theHeader>
 	<main class="container">
-		<searchBar class="relative top-[-25px] w-[80%]" />
+		<searchBar class="relative top-[-25px] w-[88%]" />
 		<article>
 			<section class="side-section">
 				<div class="property-name"></div>
