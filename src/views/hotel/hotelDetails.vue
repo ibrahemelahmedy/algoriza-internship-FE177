@@ -221,18 +221,21 @@
 								alt="man" />
 						</div>
 					</div>
-					<div class="avilable-room bg-white rounded-md overflow-hidden">
+					<div
+						class="avilable-room bg-white rounded-md overflow-hidden"
+						v-for="roomDetail in roomDetails"
+						:key="roomDetail.roomId">
 						<img
 							class="h-[200px] w-full"
-							src="/src/assets/img/booking/hotel/hotelDetails/room1.png"
+							:src="roomDetail.roomImg"
 							alt="room1" />
 						<div class="details-rom px-5 pb-6">
 							<h3 class="my-5 text-md font-[600]">
-								Standard twin ben, Multiple beds
+								{{ roomDetail.roomDetaile }}
 							</h3>
 							<ul>
 								<li
-									v-for="room in roomDetails"
+									v-for="room in roomDetails[0].details"
 									:key="room"
 									class="flex gap-[10px] text-text-color mb-[10px]">
 									<img
@@ -241,30 +244,11 @@
 									<p>{{ room.desc }}</p>
 								</li>
 							</ul>
-							<button class="btn mt-6 w-full py-3">Reserve suite</button>
-						</div>
-					</div>
-					<div class="avilable-room bg-white rounded-md overflow-hidden">
-						<img
-							class="h-[200px] w-full"
-							src="/src/assets/img/booking/hotel/hotelDetails/room2.png"
-							alt="room2" />
-						<div class="details-rom px-5 pb-6">
-							<h3 class="my-5 text-md font-[600]">
-								Standard twin ben, Multiple beds
-							</h3>
-							<ul>
-								<li
-									v-for="room in roomDetails"
-									:key="room"
-									class="flex gap-[10px] text-text-color mb-[10px]">
-									<img
-										:src="room.img"
-										:alt="room.desc" />
-									<p>{{ room.desc }}</p>
-								</li>
-							</ul>
-							<button class="btn mt-6 w-full py-3">Reserve suite</button>
+							<button
+								class="btn mt-6 w-full py-3"
+								@click="redirect(hotelId, roomDetail.id, roomDetail)"
+								>Reserve suite
+							</button>
 						</div>
 					</div>
 				</div>
@@ -280,20 +264,22 @@
 	import worningLetter from '../../components/worningletter.vue';
 	import navLink from '../../components/navLink.vue';
 	import theFooter from '../../components/theFooter.vue';
-	import { useRoute } from 'vue-router';
-	import { ref } from 'vue';
+	import { useRoute, useRouter } from 'vue-router';
+	import { computed, ref } from 'vue';
 
 	const isAuth = ref(false);
-	// const hotelId = ref("");
 	const hotelName = ref('');
 	const hotelImg = ref('');
 	const hotelReviewNum = ref('');
+	const hotelId = ref('');
 
 	const route = useRoute();
+
 	isAuth.value = route.query.isAuth;
 	hotelName.value = route.query.name;
 	hotelImg.value = route.query.img;
 	hotelReviewNum.value = route.query.reviewNumber;
+	hotelId.value = route.query.id;
 
 	const facilities = ref([
 		{
@@ -350,18 +336,62 @@
 	]);
 	const roomDetails = ref([
 		{
-			img: '/src/assets/img/booking/hotel/hotelDetails/roomDetails/bag-tick-2 1.svg',
-			desc: '300 sq ft',
+			roomId: '1',
+			roomPrice: '20',
+			roomImg: '/src/assets/img/booking/hotel/hotelDetails/room1.png',
+			roomDetaile: 'Standard twin ben, Multiple beds',
+			details: [
+				{
+					img: '/src/assets/img/booking/hotel/hotelDetails/roomDetails/bag-tick-2 1.svg',
+					desc: '300 sq ft',
+				},
+				{
+					img: '/src/assets/img/booking/hotel/hotelDetails/roomDetails/lifebuoy 1.svg',
+					desc: 'Sleeps 3',
+				},
+				{
+					img: '/src/assets/img/booking/hotel/hotelDetails/roomDetails/like-1 1.svg',
+					desc: '1 double bed and 1 twin bed',
+				},
+			],
 		},
 		{
-			img: '/src/assets/img/booking/hotel/hotelDetails/roomDetails/lifebuoy 1.svg',
-			desc: 'Sleeps 3',
-		},
-		{
-			img: '/src/assets/img/booking/hotel/hotelDetails/roomDetails/like-1 1.svg',
-			desc: '1 double bed and 1 twin bed',
+			roomId: '1',
+			roomPrice: '20',
+			roomImg: '/src/assets/img/booking/hotel/hotelDetails/room2.png',
+			roomDetaile: 'Standard twin ben, Multiple beds',
+			details: [
+				{
+					img: '/src/assets/img/booking/hotel/hotelDetails/roomDetails/bag-tick-2 1.svg',
+					desc: '300 sq ft',
+				},
+				{
+					img: '/src/assets/img/booking/hotel/hotelDetails/roomDetails/lifebuoy 1.svg',
+					desc: 'Sleeps 3',
+				},
+				{
+					img: '/src/assets/img/booking/hotel/hotelDetails/roomDetails/like-1 1.svg',
+					desc: '1 double bed and 1 twin bed',
+				},
+			],
 		},
 	]);
+
+	const router = useRouter();
+	const redirect = (hotelId, roomId, roomDetail) => {
+		router.push({
+			name: 'payment',
+			params: { hotelId: id, roomId: roomId },
+			query: {
+				isAuth: isAuth.value,
+				hotelImg: hotelImg.value,
+				hotelReviewNum: hotelReviewNum.value,
+				hotelName: hotelName.value,
+				id: hotelId.value,
+				roomPrice: roomDetail.roomPrice,
+			},
+		});
+	};
 </script>
 
 <style scoped>
