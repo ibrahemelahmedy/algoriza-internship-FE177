@@ -71,11 +71,16 @@
 						</div>
 					</div>
 					<div class="hotel-cards">
-						<card :hotels="hotels"></card>
+						<card
+							:hotels="hotels"
+							:isAuth="isAuth"></card>
 					</div>
 				</div>
 			</section>
 		</article>
+		<pagination />
+		<worningLetter />
+		<theFooter />
 	</main>
 </template>
 
@@ -83,15 +88,20 @@
 	import theHeader from '../../components/theHeader.vue';
 	import navLink from '../../components/navLink.vue';
 	import card from '../../components/card.vue';
+	import pagination from '../../components/pagination.vue';
+	import worningLetter from '../../components/worningletter.vue';
+	import theFooter from '../../components/theFooter.vue';
 	import searchBar from '../../components/searchbar.vue';
 	import propertyName from './component/propertyName.vue';
 	import dailyBadget from './component/dailyBadget.vue';
 	import rating from './component/rating.vue';
-
+	import { useRoute } from 'vue-router';
 	import { onMounted, ref } from 'vue';
 	const sortBy = ref([]);
 	const sortValue = ref('');
-
+	const isAuth = ref(false);
+	const route = useRoute();
+	isAuth.value = route.query.isAuth;
 	onMounted(
 		// sortby
 		async function getSortBy() {
@@ -119,6 +129,7 @@
 	);
 	const hotels = ref([
 		{
+			id: '1',
 			img: '/src/assets/img/booking/hotel/img/1.png',
 			name: 'Julia Dens Resort',
 			title: 'Live a little and celbrate with champagne',
@@ -132,6 +143,7 @@
 			salecolor: 'red',
 		},
 		{
+			id: '2',
 			img: '/src/assets/img/booking/hotel/img/2.png',
 			name: 'Julia Dens Resort',
 			title: 'Live a little and celbrate with champagne',
@@ -144,6 +156,7 @@
 			salecolor: '',
 		},
 		{
+			id: '3',
 			img: '/src/assets/img/booking/hotel/img/3.png',
 			name: 'Julia Dens Resort',
 			title: 'Live a little and celbrate with champagne',
@@ -156,6 +169,7 @@
 			salecolor: 'orang',
 		},
 		{
+			id: '4',
 			img: '/src/assets/img/booking/hotel/img/4.png',
 			name: 'Julia Dens Resort',
 			title: 'Live a little and celbrate with champagne',
@@ -166,6 +180,7 @@
 			sale: false,
 		},
 		{
+			id: '5',
 			img: '/src/assets/img/booking/hotel/img/5.png',
 			name: 'Shanghai Open House',
 			title: 'Live a little and celbrate with champagne',
@@ -178,6 +193,7 @@
 			salecolor: '',
 		},
 		{
+			id: '6',
 			img: '/src/assets/img/booking/hotel/img/6.png',
 			name: 'Ocean Waves Resort',
 			title: 'Live a little and celbrate with champagne',
@@ -190,6 +206,7 @@
 			salecolor: '',
 		},
 		{
+			id: '7',
 			img: '/src/assets/img/booking/hotel/img/7.png',
 			name: 'Maimi City frontier',
 			title: 'Live a little and celbrate with champagne',
@@ -202,6 +219,7 @@
 			salecolor: 'orang',
 		},
 		{
+			id: '8',
 			img: '/src/assets/img/booking/hotel/img/8.png',
 			name: 'Lakeside Motel Warefront',
 			title: 'Live a little and celbrate with champagne',

@@ -3,6 +3,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/Home/HomeView.vue';
 import boockingPage from '../views/booking/bookingPage.vue';
+import hotelDetails from '../views/hotel/hotelDetails.vue';
 import signIn from '../views/auth/signIn.vue';
 import register from '../views/auth/register.vue';
 
@@ -18,6 +19,12 @@ const router = createRouter({
 			path: '/booking',
 			name: 'booking',
 			component: boockingPage,
+		},
+		{
+			path: '/booking/:id',
+			name: 'hotelDetails',
+			component: hotelDetails,
+			props: true,
 		},
 		{
 			path: '/signIn',

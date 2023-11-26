@@ -96,7 +96,7 @@
 	import navLink from '../../components/navLink.vue';
 
 	import searchBar from '../../components/searchBar.vue';
-	import worningLetter from './component/worningLetter.vue';
+	import worningLetter from '../../components/worningLetter.vue';
 	import yourVacation from './component/yourVacation.vue';
 	import nextTrip from './component/nextTrip.vue';
 	import popularHotels from './component/popularHotels.vue';

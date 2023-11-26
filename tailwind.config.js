@@ -2,7 +2,7 @@
  * @format
  * @type {import('tailwindcss').Config}
  */
-
+const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
 	content: ['./index.html', './src/**/*.{html,js,vue,ts,jsx,tsx}'],
 	theme: {
@@ -14,6 +14,7 @@ module.exports = {
 				'toggle-bg': '#bdbdbd',
 				'booking-gray': '#F2F2F2',
 				'red-text': '#EB5757',
+				'orang-text': '#F2994A',
 				'green-text': '#219653',
 			},
 			gridColumn: {
@@ -22,6 +23,7 @@ module.exports = {
 		},
 		fontFamily: {
 			WorkSans: ['Work Sans, sans-serif;'],
+			sans: ['Inter var', ...defaultTheme.fontFamily.sans],
 		},
 		container: {
 			margin: 'auto',
