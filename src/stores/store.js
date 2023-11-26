@@ -13,7 +13,7 @@ export const useTaskStore = defineStore('taskStore', {
 						method: 'GET',
 						headers: {
 							'X-RapidAPI-Key':
-								'7440ff8fc6msh79889f5df260963p18fc19jsn83e5aa6414b2',
+								'1118611b46msh7c662ca2709200dp1bdbccjsn03d232bbe5fa',
 							'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
 						},
 					},
@@ -21,7 +21,6 @@ export const useTaskStore = defineStore('taskStore', {
 				const resp = await responsive.text();
 
 				const egyptCitiesHotel = JSON.parse(resp);
-				// console.log(egyptCitiesHotel);
 				return { egyptCitiesHotel };
 			} catch (err) {
 				console.log(err);

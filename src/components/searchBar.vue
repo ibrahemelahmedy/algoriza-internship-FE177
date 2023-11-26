@@ -206,6 +206,8 @@
 			departure_date.value !== '' &&
 			guestNum.value !== '' &&
 			roomNum.value !== '' &&
+			guestNum.value > '0' &&
+			roomNum.value > '0' &&
 			isAuth
 		) {
 			router.push({
