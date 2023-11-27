@@ -45,10 +45,13 @@
 				<VueDatePicker
 					:format="format"
 					@blur="onchang"
+					model-type="yyyy.MM.dd"
+					:enable-time-picker="false"
 					placeholder="Check in date"
 					class="datePicher"
 					v-model="arrival_date"
-					hide-input-icon></VueDatePicker>
+					hide-input-icon
+					auto-apply></VueDatePicker>
 			</div>
 
 			<div class="search-handel time-end">
@@ -61,9 +64,12 @@
 				<VueDatePicker
 					:format="format"
 					@blur="onchang"
+					:enable-time-picker="false"
+					model-type="yyyy.MM.dd"
 					placeholder="Check out date"
 					class="datePicher"
 					v-model="departure_date"
+					auto-apply
 					hide-input-icon></VueDatePicker>
 			</div>
 			<div class="search-handel guests-num">

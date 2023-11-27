@@ -26,7 +26,6 @@ module.exports = {
 			sans: ['Inter var', ...defaultTheme.fontFamily.sans],
 		},
 		container: {
-			margin: 'auto',
 			padding: '100px',
 			center: true,
 		},
