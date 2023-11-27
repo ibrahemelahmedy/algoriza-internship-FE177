@@ -1,7 +1,45 @@
 <!-- @format -->
 
 <template>
-	<theHeader class="container items-center">
+	<Teleport
+		v-if="bookingSuc"
+		to="body">
+		<theDialog
+			:isAuth="isAuth"
+			:deg="deg">
+			<template v-slot:layer>
+				<section
+					@click="closeDialog"
+					class="absolute top-0 left-0 bg-black opacity-10 h-[1820px] w-full"></section>
+			</template>
+			<template v-slot:land>
+				<div class="mt-[60px] p-5 mb-[45px] bg-[#e2f5ea] rounded-md">
+					<img
+						class="w-[160px]"
+						src="/src/assets/img/dialog/succes.png"
+						alt="" />
+				</div>
+			</template>
+			<template v-slot:content>
+				<h2 class="mb-3 text-md font-[600]">Booking Successful</h2>
+				<p class="max-w-[352px] text-text-color text-sm leading-6"
+					>Congratulations your reservation has been made. You will be notified
+					2 days prior the date.</p
+				>
+			</template>
+			<template v-slot:button>
+				<button
+					@click="redirect"
+					class="btn w-[90%] py-[6px] mb-7"
+					>View Trip</button
+				>
+			</template>
+		</theDialog>
+	</Teleport>
+
+	<theHeader
+		:isAuth="isAuth"
+		class="container items-center">
 		<template v-slot:logo>
 			<RouterLink
 				class="cursor-pointer flex gap-1"
@@ -29,19 +67,6 @@
 					>Sign In</router-link
 				>
 			</div>
-
-			<div
-				v-else
-				class="flex gap-4">
-				<img
-					class="cursor-pointer"
-					src="/src/assets/img/home/notification 1.svg"
-					alt="notification" />
-				<img
-					class="cursor-pointer"
-					src="/src/assets/img/booking/header/profile-image.png"
-					alt="profileimage" />
-			</div>
 		</template>
 	</theHeader>
 	<main class="container bg-[#f4f4f4]">
@@ -55,7 +80,15 @@
 					<!-- paymentDetails -->
 					<paymentData />
 					<!-- important Infotrmation -->
-					<importInfo />
+					<importInfo>
+						<template v-slot:button>
+							<button
+								class="btn py-3 px-[18px] mb-[21px]"
+								@click="bookingDone"
+								>Complete Booking</button
+							>
+						</template>
+					</importInfo>
 				</section>
 				<section class="side-section col-start-7 col-end-13">
 					<hotelcard />
@@ -67,6 +100,7 @@
 </template>
 
 <script setup>
+	import theDialog from '../../components/theDialog.vue';
 	import theHeader from '../../components/theHeader.vue';
 	import worningLetter from '../../components/worningletter.vue';
 	import bookingData from './component/bookingData.vue';
@@ -74,6 +108,46 @@
 	import importInfo from './component/importInfo.vue';
 	import hotelcard from './component/hotelCard.vue';
 	import priceDetails from './component/priceDetails.vue';
+	import { ref } from 'vue';
+	import { useRouter } from 'vue-router';
+	const deg = ref('150');
+	const bookingSuc = ref(false);
+	const isAuth = ref(true);
+	const bookingDone = () => {
+		bookingSuc.value = !bookingSuc.value;
+		return bookingSuc.value;
+	};
+	const closeDialog = () => {
+		bookingSuc.value = false;
+	};
+	const newHotel = ref({
+		id: '2',
+		name: 'Lakeside Motel Warefront',
+		img: '/src/assets/img/booking/payment/hotelDetails/hotel-img.png',
+		rate: '5',
+		review: '1200',
+		checkIn: ' Sunday, March 18, 2022',
+		checkOut: 'Tuesday, March 20, 2022',
+		priceBefDes: '$150',
+		priceAfterDes: '$130',
+	});
+	const router = useRouter();
+	const redirect = () => {
+		router.push({
+			name: 'myTrips',
+			query: {
+				id: newHotel.value.id,
+				img: newHotel.value.img,
+				name: newHotel.value.name,
+				rate: newHotel.value.rate,
+				review: newHotel.value.review,
+				checkIn: newHotel.value.checkIn,
+				checkOut: newHotel.value.checkOut,
+				priceBefDes: newHotel.value.priceBefDes,
+				priceAfterDes: newHotel.value.priceAfterDes,
+			},
+		});
+	};
 </script>
 
 <style scoped></style>

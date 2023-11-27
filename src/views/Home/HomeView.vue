@@ -4,9 +4,13 @@
 	<Teleport
 		v-if="isAuth"
 		to="body">
-		<theDialog :isAuth="isAuth" />
+		<theDialog
+			:isAuth="isAuth"
+			:deg="deg"></theDialog>
 	</Teleport>
-	<theHeader class="container items-center">
+	<theHeader
+		:isAuth="isAuth"
+		class="container items-center">
 		<template v-slot:logo>
 			<RouterLink
 				class="cursor-pointer flex gap-1"
@@ -36,19 +40,6 @@
 					:to="{ name: 'signIn' }"
 					>Sign In</router-link
 				>
-			</div>
-
-			<div
-				v-else
-				class="flex gap-4">
-				<img
-					class="cursor-pointer"
-					src="/src/assets/img/home/notification 1.svg"
-					alt="notification" />
-				<img
-					class="cursor-pointer"
-					src="/src/assets/img/booking/header/profile-image.png"
-					alt="profileimage" />
 			</div>
 		</template>
 	</theHeader>
@@ -97,12 +88,13 @@
 
 	import searchBar from '../../components/searchBar.vue';
 	import worningLetter from '../../components/worningLetter.vue';
+	import theFooter from '../../components/theFooter.vue';
 	import yourVacation from './component/yourVacation.vue';
 	import nextTrip from './component/nextTrip.vue';
 	import popularHotels from './component/popularHotels.vue';
 	import appDowenload from './component/appDowenload.vue';
-	import theFooter from '../../components/theFooter.vue';
 	import { useRoute } from 'vue-router';
+	const deg = ref('30');
 	const route = useRoute();
 	const isAuth = ref(false);
 	isAuth.value = route.query.isAuth || false;

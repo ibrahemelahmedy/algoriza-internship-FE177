@@ -7,6 +7,7 @@ import hotelDetails from '../views/hotel/hotelDetails.vue';
 import payment from '../views/payment/payment.vue';
 import signIn from '../views/auth/signIn.vue';
 import register from '../views/auth/register.vue';
+import myTrips from '../views/trips/myTrips.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,10 +29,15 @@ const router = createRouter({
 			props: true,
 		},
 		{
-			path: '/payment/:id',
+			path: '/payment',
 			name: 'payment',
 			component: payment,
 			props: true,
+		},
+		{
+			path: '/myTrips',
+			name: 'myTrips',
+			component: myTrips,
 		},
 		{
 			path: '/signIn',

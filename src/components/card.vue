@@ -92,7 +92,6 @@
 	const { hotels, isAuth } = defineProps(['hotels', 'isAuth']);
 	const router = useRouter();
 	const redirectHotelDetails = (id, hotel) => {
-		console.log(hotel);
 		router.push({
 			name: 'hotelDetails',
 			params: { id: id },

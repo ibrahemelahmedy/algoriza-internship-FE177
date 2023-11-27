@@ -1,7 +1,8 @@
+<!-- @format -->
 
 <template>
 	<section
-		class="warningLetter bg-[#FCEFCA] p-3 my-[10px] flex rounded-md text-md items-center gap-3">
+		class="warningLetter bg-[#FCEFCA] p-3 flex rounded-md text-md items-center gap-3">
 		<div class="icon">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

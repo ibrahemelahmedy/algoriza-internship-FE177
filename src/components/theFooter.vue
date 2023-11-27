@@ -1,6 +1,7 @@
+<!-- @format -->
 
 <template>
-	<footer class="mt-[70px]">
+	<footer class="pt-[70px]">
 		<section class="grid grid-cols-5 gap-3">
 			<div class="logoPart flex gap-2">
 				<div class="logo">

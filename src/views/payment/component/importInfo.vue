@@ -28,7 +28,8 @@
 				and
 				<span class="text-main-color cursor-pointer">Terms of Use.</span></p
 			>
-			<button class="btn py-3 px-[18px] mb-[21px]">Complete Booking</button>
+			<slot name="button"> </slot>
+
 			<div class="flex gap-2 mb-[35px] items-center"
 				><img
 					class="w-6"

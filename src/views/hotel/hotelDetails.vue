@@ -1,7 +1,9 @@
 <!-- @format -->
 
 <template>
-	<theHeader class="container items-center">
+	<theHeader
+		:isAuth="isAuth"
+		class="container items-center">
 		<template v-slot:logo>
 			<RouterLink
 				class="cursor-pointer flex gap-1"
@@ -31,19 +33,6 @@
 					:to="{ name: 'signIn' }"
 					>Sign In</router-link
 				>
-			</div>
-
-			<div
-				v-else
-				class="flex gap-4">
-				<img
-					class="cursor-pointer"
-					src="/src/assets/img/home/notification 1.svg"
-					alt="notification" />
-				<img
-					class="cursor-pointer"
-					src="/src/assets/img/booking/header/profile-image.png"
-					alt="profileimage" />
 			</div>
 		</template>
 	</theHeader>
@@ -265,7 +254,7 @@
 	import navLink from '../../components/navLink.vue';
 	import theFooter from '../../components/theFooter.vue';
 	import { useRoute, useRouter } from 'vue-router';
-	import { computed, ref } from 'vue';
+	import { ref } from 'vue';
 
 	const isAuth = ref(false);
 	const hotelName = ref('');

@@ -150,7 +150,6 @@
 	const month = ref(monthNames.value[new Date().getMonth()]);
 
 	const year = ref(new Date().getFullYear());
-	console.log(month.value);
 	// const flow = ref(['month']);
 </script>
 

@@ -1,7 +1,9 @@
 <!-- @format -->
 
 <template>
-	<theHeader class="header container text-white items-start flex py-5">
+	<theHeader
+		:isAuth="isAuth"
+		class="header container text-white items-start flex py-5">
 		<template v-slot:logo>
 			<RouterLink
 				class="cursor-pointer flex gap-1"
@@ -18,15 +20,19 @@
 			<navLink class="text-white" />
 		</template>
 		<template v-slot:button>
-			<div class="flex gap-4">
-				<img
-					class="cursor-pointer"
-					src="/src/assets/img/booking/header/notification.svg"
-					alt="notification" />
-				<img
-					class="cursor-pointer"
-					src="/src/assets/img/booking/header/profile-image.png"
-					alt="profileimage" />
+			<div
+				v-if="!isAuth"
+				class="flex gap-4">
+				<router-link
+					class="btn px-3 py-2"
+					:to="{ name: 'register' }"
+					>Register</router-link
+				>
+				<router-link
+					class="btn px-3 py-2"
+					:to="{ name: 'signIn' }"
+					>Sign In</router-link
+				>
 			</div>
 		</template>
 	</theHeader>
