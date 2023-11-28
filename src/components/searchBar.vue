@@ -13,25 +13,10 @@
 						alt="location" />
 				</label>
 				<div class="custom-select">
-					<select
-						name="egypt"
-						id="country"
-						class="text-[11px] font-normal"
-						v-model="cityName">
-						<option
-							value=""
-							disabled
-							selected
-							hidden>
-							Where are you going?</option
-						>
-						<option
-							:value="city"
-							v-for="city in cities"
-							:key="city"
-							>{{ city.name }}</option
-						>
-					</select>
+					<selectBoxSearch
+						:data="cities"
+						v-model="cityName"
+						class="absolute"></selectBoxSearch>
 				</div>
 			</div>
 
@@ -132,9 +117,11 @@
 </template>
 
 <script setup>
+	import selectBoxSearch from './selectBoxSearch.vue';
 	import { computed, ref, defineProps } from 'vue';
 	import { useRouter } from 'vue-router';
 	import { useTaskStore } from '../stores/store';
+
 	const taskStore = useTaskStore();
 	const roomNum = ref('');
 	const guestNum = ref('');
@@ -144,6 +131,7 @@
 	const allCheckWell = ref(true);
 
 	// error msg handel
+
 	const chechDate = ref(true);
 	const onchang = computed(() => {
 		const now = new Date();
@@ -183,14 +171,13 @@
 	const dataCities = async () => {
 		const data = await taskStore.egyptCities();
 		const searchCity = data.egyptCitiesHotel.data.filter(
-			(data) => data.search_type !== 'country',
+			(data) => data.search_type === 'city',
 		);
 		for (let i = 0; i < searchCity.length; i++) {
 			cities.value.push(searchCity[i]);
 		}
 		return cities;
 	};
-
 	dataCities();
 
 	// handleDate
@@ -199,7 +186,7 @@
 		const day = date.getDate();
 		const month = date.getMonth() + 1;
 		const year = date.getFullYear();
-		return `${day}/${month}/${year}`;
+		return `${day}-${month}-${year}`;
 	};
 
 	//  send data with route
@@ -216,6 +203,7 @@
 			roomNum.value > '0' &&
 			isAuth
 		) {
+			localStorage.setItem('');
 			router.push({
 				name: 'booking',
 				query: {
@@ -233,14 +221,6 @@
 			});
 		}
 	};
-
-	// const chosenCity = () => {
-	// 	console.log(cityName.value);
-	// 	console.log(arrival_date.value);
-	// 	console.log(departure_date.value);
-	// 	console.log(`${guestNum.value} gest`);
-	// 	console.log(`${roomNum.value} room`);
-	// };
 </script>
 <style>
 	.search-handel {
@@ -248,7 +228,7 @@
 	}
 	.search-handel select,
 	.search-handel input {
-		@apply bg-transparent w-full cursor-pointer border-none text-[11px] font-normal p-0;
+		@apply bg-transparent w-full cursor-pointer border-none text-[11px] font-[400] p-0;
 	}
 
 	.search-handel input::placeholder {
@@ -258,6 +238,11 @@
 	.search-handel input:focus {
 		@apply outline-none;
 	}
-
-	/* select box style */
 </style>
+<!-- /	// const chosenCity = () => {
+	// 	console.log(cityName.value);
+	// 	console.log(arrival_date.value);
+	// 	console.log(departure_date.value);
+	// 	console.log(`${guestNum.value} gest`);
+	// 	console.log(`${roomNum.value} room`);
+	// }; -->

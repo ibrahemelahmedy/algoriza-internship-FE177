@@ -52,28 +52,55 @@
 						<h2 class="text-xl font-semibold"
 							>Melbourne : 2,582 search results found</h2
 						>
-						<div class="sort-by">
-							<select
-								name="egypt"
-								id="country"
-								class="text-[11px] font-normal"
-								v-model="sortValue">
-								<option
-									class=""
-									value=""
-									disabled
-									selected
-									hidden>
-									<p>Sort by</p>
-									<p>Recommended</p>
-								</option>
-								<option
-									:value="sort.id"
-									v-for="sort in sortBy"
-									:key="sort.id"
-									>{{ sort.id }}</option
-								>
-							</select>
+						<div class="sort-by relative">
+							<selectBoxSearch
+								v-model="sortValue"
+								class="absolute top-[-50px] left-[-200px]">
+								<template v-slot:title>
+									<ListboxButton
+										class="relative w-[190px] cursor-pointer border border-gray-300 rounded-md py-2 px-3 text-left shadow-sm ring-inset focus:outline-none focus:ring-2 sm:text-sm sm:leading-6">
+										<div class="flex flex-col">
+											<p class="text-xs text-text-color font-[400] h-fit"
+												>Sort by</p
+											>
+											<p class="text-md font-[normal]h-fit">Recommended</p>
+										</div>
+										<span
+											class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+											<ChevronDownIcon
+												class="h-5 w-5 text-gray-400"
+												aria-hidden="true" />
+										</span>
+									</ListboxButton>
+								</template>
+								<template v-slot:content>
+									<ListboxOptions
+										class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+										<ListboxOption
+											as="template"
+											v-for="sort in sortBy"
+											:key="sort.id"
+											:value="sort.title"
+											v-slot="{ active, selected }">
+											<li
+												:class="[
+													active ? 'bg-indigo-600 text-white' : 'text-gray-900',
+													'relative cursor-pointer select-none py-[10px] border-b pl-3 pr-9 last:border-none   ',
+												]">
+												<div class="flex items-center w-fit mx-auto">
+													<span
+														:class="[
+															selected ? 'font-semibold' : 'font-normal',
+															'ml-3 block truncate ',
+														]"
+														>{{ sort.title }}</span
+													>
+												</div>
+											</li>
+										</ListboxOption>
+									</ListboxOptions>
+								</template>
+							</selectBoxSearch>
 						</div>
 					</div>
 					<div class="hotel-cards">
@@ -94,6 +121,7 @@
 	import theHeader from '../../components/theHeader.vue';
 	import navLink from '../../components/navLink.vue';
 	import card from '../../components/card.vue';
+	import selectBoxSearch from '../../components/selectboxsearch.vue';
 	import pagination from '../../components/pagination.vue';
 	import worningLetter from '../../components/worningletter.vue';
 	import theFooter from '../../components/theFooter.vue';
@@ -101,38 +129,38 @@
 	import propertyName from './component/propertyName.vue';
 	import dailyBadget from './component/dailyBadget.vue';
 	import rating from './component/rating.vue';
+
+	import {
+		Listbox,
+		ListboxButton,
+		ListboxLabel,
+		ListboxOption,
+		ListboxOptions,
+	} from '@headlessui/vue';
+	import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/20/solid';
+
 	import { useRoute } from 'vue-router';
-	import { onMounted, ref } from 'vue';
-	const sortBy = ref([]);
+	import { ref } from 'vue';
+	import { useTaskStore } from '../../stores/store';
+	const taskStore = useTaskStore();
+	// sortBy
+
 	const sortValue = ref('');
 	const isAuth = ref(false);
 	const route = useRoute();
 	isAuth.value = route.query.isAuth;
-	onMounted(
-		// sortby
-		async function getSortBy() {
-			try {
-				const responsive = await fetch(
-					'https://booking-com15.p.rapidapi.com/api/v1/hotels/getSortBy?dest_id=-2092174&search_type=CITY&arrival_date=2023-11-26&departure_date=2023-11-30&adults=1&children_age=1%2C17&room_qty=1',
-					{
-						method: 'GET',
-						headers: {
-							'X-RapidAPI-Key':
-								'7440ff8fc6msh79889f5df260963p18fc19jsn83e5aa6414b2',
-							'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
-						},
-					},
-				);
-				const data = await responsive.text();
+	// sortby
+	const sortBy = ref([]);
+	const dataSortBy = async () => {
+		const data = JSON.parse(await taskStore.getSortBy());
 
-				const FetchSortBy = JSON.parse(data);
-				sortBy.value.push(...FetchSortBy.data);
-				return sortBy;
-			} catch (err) {
-				console.log(err);
-			}
-		},
-	);
+		for (let i = 0; i < data.data.length; i++) {
+			sortBy.value.push(data.data[i]);
+		}
+		return sortBy;
+	};
+	dataSortBy();
+	console.log(sortBy.value);
 	const hotels = ref([
 		{
 			id: '1',

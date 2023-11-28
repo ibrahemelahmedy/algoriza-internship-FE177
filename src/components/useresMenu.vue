@@ -2,7 +2,7 @@
 
 <template>
 	<section
-		class="absolute top-[100%] z-50 w-[230px] right-[11%] shadow-2xl rounded-md bg-white py-[10px]">
+		class="absolute top-[100%] z-50 w-[230px] right-[11%] shadow-md rounded-md bg-white py-[10px]">
 		<div class="account box">
 			<img
 				src="/src/assets/img/userMenu/user-square 2.svg"

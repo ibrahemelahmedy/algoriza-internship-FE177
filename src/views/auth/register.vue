@@ -159,11 +159,13 @@
 			return;
 		} else if (JSON.parse(localStorage.getItem('userEmail')) !== email.value) {
 			emailValid.value = true;
+			isAuth.value = true;
+			localStorage.setItem('isAuth', isAuth.value);
 			const token = Math.random().toString(20).substring(2, 19);
 			localStorage.setItem('token', JSON.stringify(token));
 			localStorage.setItem('userEmail', JSON.stringify(email.value));
 			localStorage.setItem('userPassword', JSON.stringify(password.value));
-			isAuth.value = true;
+
 			const redirectRoute = async () => {
 				if (isAuth) {
 					await router.replace({
