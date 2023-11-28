@@ -48,59 +48,16 @@
 			</section>
 			<section class="main-section col-start-2 col-end-13">
 				<div class="hotel-result">
-					<div class="title flex justify-between mb-5">
+					<div class="title flex justify-between mb-12">
 						<h2 class="text-xl font-semibold"
 							>Melbourne : 2,582 search results found</h2
 						>
 						<div class="sort-by relative">
-							<selectBoxSearch
+							<sortBy
+								:data="sortByReco"
 								v-model="sortValue"
-								class="absolute top-[-50px] left-[-200px]">
-								<template v-slot:title>
-									<ListboxButton
-										class="relative w-[190px] cursor-pointer border border-gray-300 rounded-md py-2 px-3 text-left shadow-sm ring-inset focus:outline-none focus:ring-2 sm:text-sm sm:leading-6">
-										<div class="flex flex-col">
-											<p class="text-xs text-text-color font-[400] h-fit"
-												>Sort by</p
-											>
-											<p class="text-md font-[normal]h-fit">Recommended</p>
-										</div>
-										<span
-											class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-											<ChevronDownIcon
-												class="h-5 w-5 text-gray-400"
-												aria-hidden="true" />
-										</span>
-									</ListboxButton>
-								</template>
-								<template v-slot:content>
-									<ListboxOptions
-										class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-										<ListboxOption
-											as="template"
-											v-for="sort in sortBy"
-											:key="sort.id"
-											:value="sort.title"
-											v-slot="{ active, selected }">
-											<li
-												:class="[
-													active ? 'bg-indigo-600 text-white' : 'text-gray-900',
-													'relative cursor-pointer select-none py-[10px] border-b pl-3 pr-9 last:border-none   ',
-												]">
-												<div class="flex items-center w-fit mx-auto">
-													<span
-														:class="[
-															selected ? 'font-semibold' : 'font-normal',
-															'ml-3 block truncate ',
-														]"
-														>{{ sort.title }}</span
-													>
-												</div>
-											</li>
-										</ListboxOption>
-									</ListboxOptions>
-								</template>
-							</selectBoxSearch>
+								class="absolute">
+							</sortBy>
 						</div>
 					</div>
 					<div class="hotel-cards">
@@ -121,7 +78,7 @@
 	import theHeader from '../../components/theHeader.vue';
 	import navLink from '../../components/navLink.vue';
 	import card from '../../components/card.vue';
-	import selectBoxSearch from '../../components/selectboxsearch.vue';
+	import sortBy from './component/sortBy.vue';
 	import pagination from '../../components/pagination.vue';
 	import worningLetter from '../../components/worningletter.vue';
 	import theFooter from '../../components/theFooter.vue';
@@ -130,38 +87,52 @@
 	import dailyBadget from './component/dailyBadget.vue';
 	import rating from './component/rating.vue';
 
-	import {
-		Listbox,
-		ListboxButton,
-		ListboxLabel,
-		ListboxOption,
-		ListboxOptions,
-	} from '@headlessui/vue';
-	import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/20/solid';
-
 	import { useRoute } from 'vue-router';
-	import { ref } from 'vue';
+	import { ref, watch } from 'vue';
 	import { useTaskStore } from '../../stores/store';
 	const taskStore = useTaskStore();
-	// sortBy
 
 	const sortValue = ref('');
 	const isAuth = ref(false);
 	const route = useRoute();
 	isAuth.value = route.query.isAuth;
 	// sortby
-	const sortBy = ref([]);
+	const sortByReco = ref([]);
 	const dataSortBy = async () => {
 		const data = JSON.parse(await taskStore.getSortBy());
 
 		for (let i = 0; i < data.data.length; i++) {
-			sortBy.value.push(data.data[i]);
+			sortByReco.value.push(data.data[i]);
 		}
-		return sortBy;
+		return sortByReco;
 	};
 	dataSortBy();
-	console.log(sortBy.value);
-	const hotels = ref([
+
+	watch(sortValue, (newSortValue) => {
+		console.log(newSortValue);
+	});
+
+	const hotels = ref([]);
+
+	const dataHotels = async () => {
+		const data = JSON.parse(await taskStore.getHotels());
+
+		for (let i = 0; i < data.data.hotels.length; i++) {
+			hotels.value.push(data.data.hotels[i]);
+		}
+
+		return { hotels };
+	};
+	dataHotels();
+</script>
+
+<style scoped>
+	.header {
+		background: linear-gradient(180deg, #2969bf 0%, #144e9d 100%);
+		min-height: 200px;
+	}
+</style>
+<!-- const hotels = ref([
 		{
 			id: '1',
 			img: '/src/assets/img/booking/hotel/img/1.png',
@@ -265,12 +236,4 @@
 			saleMsg: '',
 			salecolor: '',
 		},
-	]);
-</script>
-
-<style scoped>
-	.header {
-		background: linear-gradient(180deg, #2969bf 0%, #144e9d 100%);
-		min-height: 200px;
-	}
-</style>
+	]); -->

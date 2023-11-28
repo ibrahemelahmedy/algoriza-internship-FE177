@@ -82,7 +82,6 @@
 	<theFooter class="container" />
 </template>
 <script setup>
-	import { ref } from 'vue';
 	import theDialog from '../../components/theDialog.vue';
 	import theHeader from '../../components/theHeader.vue';
 	import navLink from '../../components/navLink.vue';
@@ -94,6 +93,8 @@
 	import nextTrip from './component/nextTrip.vue';
 	import popularHotels from './component/popularHotels.vue';
 	import appDowenload from './component/appDowenload.vue';
+	import { ref, onMounted } from 'vue';
+
 	import { useRoute } from 'vue-router';
 	const deg = ref('30');
 	const route = useRoute();

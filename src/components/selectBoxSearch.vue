@@ -1,8 +1,9 @@
 <!-- @format -->
 
 <template>
+	<!-- :class="position ? 'top-[2px] right-[10%]' : 'top-[4%] left-[3%]'" -->
 	<Listbox
-		class="absolute top-[4%] left-[3%] w-[190px]"
+		class="absolute w-[190px] top-[4%] left-[3%]"
 		as="div"
 		v-model="selected">
 		<div class="relative mt-2">

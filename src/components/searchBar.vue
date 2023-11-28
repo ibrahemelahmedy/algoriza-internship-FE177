@@ -30,7 +30,7 @@
 				<VueDatePicker
 					:format="format"
 					@blur="onchang"
-					model-type="yyyy.MM.dd"
+					model-type="yyyy-MM-dd"
 					:enable-time-picker="false"
 					placeholder="Check in date"
 					class="datePicher"
@@ -50,7 +50,7 @@
 					:format="format"
 					@blur="onchang"
 					:enable-time-picker="false"
-					model-type="yyyy.MM.dd"
+					model-type="yyyy-MM-dd"
 					placeholder="Check out date"
 					class="datePicher"
 					v-model="departure_date"
@@ -129,7 +129,6 @@
 	const arrival_date = ref('');
 	const departure_date = ref('');
 	const allCheckWell = ref(true);
-
 	// error msg handel
 
 	const chechDate = ref(true);

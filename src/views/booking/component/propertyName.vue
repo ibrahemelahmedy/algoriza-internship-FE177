@@ -11,6 +11,7 @@
 				src="/src/assets/img/booking/propertyName/search 1.svg"
 				alt="search" />
 			<input
+				v-model="searchPro"
 				class="pl-9 py-1 rounded-md shadow-sm w-full"
 				type="text"
 				name="search-by"
@@ -19,6 +20,10 @@
 	</div>
 </template>
 
-<script setup></script>
+<script setup>
+	import { ref } from 'vue';
+
+	const searchPro = ref('');
+</script>
 
 <style scoped></style>
