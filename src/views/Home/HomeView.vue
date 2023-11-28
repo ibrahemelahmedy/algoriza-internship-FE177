@@ -10,6 +10,7 @@
 	</Teleport>
 	<theHeader
 		:isAuth="isAuth"
+		:notWColor="notWColor"
 		class="container items-center">
 		<template v-slot:logo>
 			<RouterLink
@@ -98,4 +99,6 @@
 	const route = useRoute();
 	const isAuth = ref(false);
 	isAuth.value = route.query.isAuth || false;
+	// Notification icon handel
+	const notWColor = ref(true);
 </script>

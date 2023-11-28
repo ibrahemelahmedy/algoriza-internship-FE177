@@ -140,7 +140,7 @@
 		chechDate.value = true;
 		allCheckWell.value = true;
 
-		if (now > dateIn || now > dateOut || dateIn > dateOut) {
+		if (now > dateIn || now > dateOut || dateIn >= dateOut) {
 			chechDate.value = false;
 			allCheckWell.value = false;
 		}
@@ -203,7 +203,6 @@
 			roomNum.value > '0' &&
 			isAuth
 		) {
-			localStorage.setItem('');
 			router.push({
 				name: 'booking',
 				query: {
@@ -239,10 +238,3 @@
 		@apply outline-none;
 	}
 </style>
-<!-- /	// const chosenCity = () => {
-	// 	console.log(cityName.value);
-	// 	console.log(arrival_date.value);
-	// 	console.log(departure_date.value);
-	// 	console.log(`${guestNum.value} gest`);
-	// 	console.log(`${roomNum.value} room`);
-	// }; -->
