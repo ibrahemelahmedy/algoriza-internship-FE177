@@ -22,8 +22,6 @@ export const useTaskStore = defineStore('taskStore', {
 	actions: {
 		storeCityHotelData(data) {
 			this.cityHotels = data;
-
-			console.log(this.cityHotels);
 			return this.cityHotels;
 		},
 		storeHotelData(data) {

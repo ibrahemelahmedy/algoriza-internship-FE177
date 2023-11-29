@@ -18,11 +18,11 @@
 					class="font-medium text-md truncate hover:overflow-visible max-w-[300px]"
 					>{{ hotel.property.name }}</h3
 				>
-				<!-- v-if="
-						hotel.property.priceBreakdown.excludedPrice.value &&
-						hotel.property.priceBreakdown.excludedPrice.value !== ''
-					" -->
 				<p
+					v-if="
+						hotel.property.priceBreakdown.strikethroughPrice.value &&
+						hotel.property.priceBreakdown.strikethroughPrice.value !== ''
+					"
 					:class="`bg-${hotel.salecolor}-text`"
 					class="text-white py-[3px] px-[8px] rounded-lg text-xs"
 					>{{ hotel.saleMsg }}</p
@@ -66,20 +66,19 @@
 			<p class="p-text mb-2 font-[600]">{{ hotel.title }}</p>
 			<div class="description flex mb-[18px] justify-between">
 				<p class="text-[10px] w-[350px]">{{ hotel.accessibilityLabel }}</p>
-				<!-- v-if="
-						hotel.property.priceBreakdown.excludedPrice.value &&
-						hotel.property.priceBreakdown.excludedPrice.value !== ''
-					" -->
 				<p
+					v-if="
+						hotel.property.priceBreakdown.strikethroughPrice.value &&
+						hotel.property.priceBreakdown.strikethroughPrice.value !== ''
+					"
 					class="over bg-green-text text-white text-xs py-[4px] px-[8px] text-start h-fit rounded-md">
 					{{
 						intNum(
 							degOfSal(
 								intNum(
 									realPricSale(
+										hotel.property.priceBreakdown.strikethroughPrice.value,
 										hotel.property.priceBreakdown.grossPrice.value,
-										1,
-										// hotel.property.priceBreakdown.excludedPrice.value,
 									),
 								),
 								intNum(hotel.property.priceBreakdown.grossPrice.value),
@@ -99,19 +98,21 @@
 				<div class="prices">
 					<div
 						class="price text-end mb-[6px] flex justify-end items-center gap-2">
-						<!-- v-if="
-								hotel.property.priceBreakdown.excludedPrice.value &&
-								hotel.property.priceBreakdown.excludedPrice.value !== ''
-							" -->
-						<p class="sale text-red-text text-sm line-through font-[500]">{{
-							intNum(
-								realPricSale(
-									hotel.property.priceBreakdown.grossPrice.value,
-									1,
-									// hotel.property.priceBreakdown.excludedPrice.value,
-								),
-							)
-						}}</p>
+						<p
+							v-if="
+								hotel.property.priceBreakdown.strikethroughPrice.value &&
+								hotel.property.priceBreakdown.strikethroughPrice.value !== ''
+							"
+							class="sale text-red-text text-sm line-through font-[500]"
+							>{{
+								intNum(
+									realPricSale(
+										hotel.property.priceBreakdown.strikethroughPrice.value,
+										hotel.property.priceBreakdown.grossPrice.value,
+									),
+								)
+							}}</p
+						>
 						<p class="text-lg font-[500]">{{
 							intNum(hotel.property.priceBreakdown.grossPrice.value)
 						}}</p>

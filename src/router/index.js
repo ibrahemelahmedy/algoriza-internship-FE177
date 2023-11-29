@@ -2,12 +2,12 @@
 
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/Home/HomeView.vue';
-import boockingPage from '../views/booking/bookingPage.vue';
+import bookingPage from '../views/booking/bookingPage.vue';
 import hotelDetails from '../views/hotel/hotelDetails.vue';
 import payment from '../views/payment/payment.vue';
+import myTrips from '../views/trips/myTrips.vue';
 import signIn from '../views/auth/signIn.vue';
 import register from '../views/auth/register.vue';
-import myTrips from '../views/trips/myTrips.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,7 +20,7 @@ const router = createRouter({
 		{
 			path: '/booking',
 			name: 'booking',
-			component: boockingPage,
+			component: bookingPage,
 		},
 		{
 			path: '/booking/:id',
@@ -48,6 +48,14 @@ const router = createRouter({
 			path: '/register',
 			name: 'register',
 			component: register,
+			// beforeEnter: (to, _, next) => {
+			// 	const isAuth = user.currentUser;
+			// 	if (!isAuth && to.name !== 'signIn') {
+			// 		next({ name: 'signIn' });
+			// 	} else {
+			// 		next();
+			// 	}
+			// },
 		},
 	],
 });
