@@ -37,7 +37,10 @@
 		</template>
 	</theHeader>
 	<main class="container">
-		<searchBar class="relative top-[-25px] w-[88%]" />
+		<searchBar
+			:isAuth="isAuth"
+			:hotelsDetails="hotelsSearchDetails"
+			class="relative top-[-25px] w-[88%]" />
 		<article class="grid gap-[30px] mt-[30px]">
 			<section class="side-section max-w-[300px] col-start-1 col-end-2">
 				<propertyName />
@@ -50,7 +53,7 @@
 				<div class="hotel-result">
 					<div class="title flex justify-between mb-12">
 						<h2 class="text-xl font-semibold"
-							>Melbourne : 2,582 search results found</h2
+							>Melbourne : {{ parseInt(meta) || '0' }} search results found</h2
 						>
 						<div class="sort-by relative">
 							<sortBy
@@ -88,10 +91,10 @@
 	import rating from './component/rating.vue';
 
 	import { useRoute } from 'vue-router';
-	import { ref, watch } from 'vue';
+	import { onMounted, ref, watch } from 'vue';
 	import { useTaskStore } from '../../stores/store';
 	const taskStore = useTaskStore();
-
+	const hotelsSearchDetails = ref({});
 	const sortValue = ref('');
 	const isAuth = ref(false);
 	const route = useRoute();
@@ -112,18 +115,33 @@
 		console.log(newSortValue);
 	});
 
+	// get hotelData
 	const hotels = ref([]);
+	const meta = ref([]);
 
 	const dataHotels = async () => {
 		const data = JSON.parse(await taskStore.getHotels());
-
+		if (data.data.meta) {
+			meta.value.push(data.data.meta[0].title);
+		} else {
+			meta.value = '1200';
+		}
 		for (let i = 0; i < data.data.hotels.length; i++) {
 			hotels.value.push(data.data.hotels[i]);
 		}
 
-		return { hotels };
+		return hotels, meta;
 	};
-	dataHotels();
+	// get data from search bar
+	hotelsSearchDetails.value = { ...JSON.parse(route.query.hotelsDetails) };
+
+	onMounted(() => {
+		// call hotel storage
+		dataHotels();
+		// store hotels data
+		taskStore.storeHotelData(hotels.value);
+		taskStore.storeCityHotelData(hotelsSearchDetails.value);
+	});
 </script>
 
 <style scoped>

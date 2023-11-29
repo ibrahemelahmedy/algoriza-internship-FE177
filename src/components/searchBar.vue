@@ -15,7 +15,7 @@
 				<div class="custom-select">
 					<selectBoxSearch
 						:data="cities"
-						v-model="cityName"
+						v-model="hotelsSearchDetails.cityName"
 						class="absolute"></selectBoxSearch>
 				</div>
 			</div>
@@ -34,7 +34,7 @@
 					:enable-time-picker="false"
 					placeholder="Check in date"
 					class="datePicher"
-					v-model="arrival_date"
+					v-model="hotelsSearchDetails.arrival_date"
 					hide-input-icon
 					auto-apply></VueDatePicker>
 			</div>
@@ -53,7 +53,7 @@
 					model-type="yyyy-MM-dd"
 					placeholder="Check out date"
 					class="datePicher"
-					v-model="departure_date"
+					v-model="hotelsSearchDetails.departure_date"
 					auto-apply
 					hide-input-icon></VueDatePicker>
 			</div>
@@ -70,7 +70,7 @@
 					id="guestsNum"
 					name="guestsNum"
 					placeholder="Guests"
-					v-model.trim="guestNum" />
+					v-model.trim="hotelsSearchDetails.adults" />
 			</div>
 			<div class="search-handel rooms-num">
 				<label for="roomsNum">
@@ -85,7 +85,7 @@
 					id="roomsNum"
 					name="roomsNum"
 					placeholder="Rooms"
-					v-model.trim="roomNum" />
+					v-model.trim="hotelsSearchDetails.room_qty" />
 			</div>
 			<button
 				class="btn"
@@ -118,24 +118,31 @@
 
 <script setup>
 	import selectBoxSearch from './selectBoxSearch.vue';
-	import { computed, ref, defineProps } from 'vue';
+	import { computed, ref, defineProps, onMounted } from 'vue';
 	import { useRouter } from 'vue-router';
 	import { useTaskStore } from '../stores/store';
-
 	const taskStore = useTaskStore();
-	const roomNum = ref('');
-	const guestNum = ref('');
-	const cityName = ref('');
-	const arrival_date = ref('');
-	const departure_date = ref('');
+
+	const { isAuth, hotelsDetails } = defineProps(['isAuth', 'hotelsDetails']);
+
+	const hotelsSearchDetails = ref({
+		cityName: '',
+		dest_id: '',
+		arrival_date: '',
+		departure_date: '',
+		adults: '',
+		room_qty: '',
+	});
+
 	const allCheckWell = ref(true);
+
 	// error msg handel
 
 	const chechDate = ref(true);
 	const onchang = computed(() => {
 		const now = new Date();
-		const dateIn = new Date(arrival_date.value);
-		const dateOut = new Date(departure_date.value);
+		const dateIn = new Date(hotelsSearchDetails.value.arrival_date);
+		const dateOut = new Date(hotelsSearchDetails.value.departure_date);
 		chechDate.value = true;
 		allCheckWell.value = true;
 
@@ -149,7 +156,7 @@
 		checkGestNum.value = true;
 		allCheckWell.value = false;
 
-		if (guestNum.value <= '0') {
+		if (hotelsSearchDetails.value.adults <= '0') {
 			checkGestNum.value = false;
 			allCheckWell.value = false;
 		}
@@ -159,7 +166,7 @@
 		checkRoomNum.value = true;
 		allCheckWell.value = true;
 
-		if (roomNum.value <= '0') {
+		if (hotelsSearchDetails.value.room_qty <= '0') {
 			checkRoomNum.value = false;
 			allCheckWell.value = false;
 		}
@@ -177,7 +184,6 @@
 		}
 		return cities;
 	};
-	dataCities();
 
 	// handleDate
 	// In case of a range picker, you'll receive [Date, Date]
@@ -190,26 +196,23 @@
 
 	//  send data with route
 	const router = useRouter();
-	const { isAuth } = defineProps(['isAuth']);
+
 	const searchHandel = () => {
 		if (
-			cityName.value !== '' &&
-			arrival_date.value !== '' &&
-			departure_date.value !== '' &&
-			guestNum.value !== '' &&
-			roomNum.value !== '' &&
-			guestNum.value > '0' &&
-			roomNum.value > '0' &&
+			hotelsSearchDetails.value.cityName !== '' &&
+			hotelsSearchDetails.value.arrival_date !== '' &&
+			hotelsSearchDetails.value.departure_date !== '' &&
+			hotelsSearchDetails.value.adults !== '' &&
+			hotelsSearchDetails.value.room_qty !== '' &&
+			hotelsSearchDetails.value.adults > '0' &&
+			hotelsSearchDetails.value.room_qty > '0' &&
 			isAuth
 		) {
 			router.push({
 				name: 'booking',
 				query: {
-					cityName: cityName.value,
-					arrival_date: arrival_date.value,
-					departure_date: departure_date.value,
-					guestNum: guestNum.value,
-					roomNum: roomNum.value,
+					hotelsDetails: JSON.stringify(hotelsSearchDetails.value),
+
 					isAuth: isAuth,
 				},
 			});
@@ -219,6 +222,20 @@
 			});
 		}
 	};
+	onMounted(() => {
+		dataCities();
+		// get hotel-id
+		hotelsSearchDetails.value.dest_id = JSON.parse(
+			localStorage.getItem('dest_id'),
+		);
+
+		if (hotelsDetails) {
+			hotelsSearchDetails.value.arrival_date = hotelsDetails.arrival_date;
+			hotelsSearchDetails.value.departure_date = hotelsDetails.departure_date;
+			hotelsSearchDetails.value.adults = hotelsDetails.adults;
+			hotelsSearchDetails.value.room_qty = hotelsDetails.room_qty;
+		}
+	});
 </script>
 <style>
 	.search-handel {

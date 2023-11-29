@@ -11,9 +11,11 @@
 				<ListboxButton
 					class="relative w-full cursor-pointer rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-inset focus:outline-none focus:ring-2 sm:text-sm sm:leading-6">
 					<span class="flex items-center">
-						<span class="ml-3 block truncate text-[11px] font-normal">{{
-							selected
-						}}</span>
+						<span
+							@click="getId(selected)"
+							class="ml-3 block truncate text-[11px] font-normal"
+							>{{ selected }}</span
+						>
 					</span>
 					<span
 						class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -45,6 +47,7 @@
 								]">
 								<div class="flex items-center w-fit mx-auto">
 									<span
+										@click="getId(city.dest_id)"
 										:class="[
 											selected ? 'font-semibold' : 'font-normal',
 											'ml-3 block truncate ',
@@ -62,7 +65,7 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue';
+	import { onMounted, ref, watch } from 'vue';
 	import {
 		Listbox,
 		ListboxButton,
@@ -71,6 +74,21 @@
 		ListboxOptions,
 	} from '@headlessui/vue';
 	import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/20/solid';
+	import { useRoute } from 'vue-router';
 	const cities = defineProps(['data']);
-	const selected = ref('Where are you going?');
+	const route = useRoute();
+	const selected = ref('');
+	onMounted(() => {
+		if (route.query.hotelsDetails) {
+			selected.value = JSON.parse(route.query.hotelsDetails).cityName;
+		} else {
+			selected.value = 'Where are you going?';
+		}
+	});
+	const getId = (id) => {
+		localStorage.setItem('dest_id', id);
+	};
+	watch(selected, (newSelect, _) => {
+		localStorage.setItem('citySelected', JSON.stringify(newSelect));
+	});
 </script>

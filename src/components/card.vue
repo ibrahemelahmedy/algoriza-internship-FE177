@@ -18,11 +18,11 @@
 					class="font-medium text-md truncate hover:overflow-visible max-w-[300px]"
 					>{{ hotel.property.name }}</h3
 				>
-				<p
-					v-if="
+				<!-- v-if="
 						hotel.property.priceBreakdown.excludedPrice.value &&
 						hotel.property.priceBreakdown.excludedPrice.value !== ''
-					"
+					" -->
+				<p
 					:class="`bg-${hotel.salecolor}-text`"
 					class="text-white py-[3px] px-[8px] rounded-lg text-xs"
 					>{{ hotel.saleMsg }}</p
@@ -66,11 +66,11 @@
 			<p class="p-text mb-2 font-[600]">{{ hotel.title }}</p>
 			<div class="description flex mb-[18px] justify-between">
 				<p class="text-[10px] w-[350px]">{{ hotel.accessibilityLabel }}</p>
-				<p
-					v-if="
+				<!-- v-if="
 						hotel.property.priceBreakdown.excludedPrice.value &&
 						hotel.property.priceBreakdown.excludedPrice.value !== ''
-					"
+					" -->
+				<p
 					class="over bg-green-text text-white text-xs py-[4px] px-[8px] text-start h-fit rounded-md">
 					{{
 						intNum(
@@ -78,7 +78,8 @@
 								intNum(
 									realPricSale(
 										hotel.property.priceBreakdown.grossPrice.value,
-										hotel.property.priceBreakdown.excludedPrice.value,
+										1,
+										// hotel.property.priceBreakdown.excludedPrice.value,
 									),
 								),
 								intNum(hotel.property.priceBreakdown.grossPrice.value),
@@ -98,21 +99,19 @@
 				<div class="prices">
 					<div
 						class="price text-end mb-[6px] flex justify-end items-center gap-2">
-						<p
-							v-if="
+						<!-- v-if="
 								hotel.property.priceBreakdown.excludedPrice.value &&
 								hotel.property.priceBreakdown.excludedPrice.value !== ''
-							"
-							class="sale text-red-text text-sm line-through font-[500]"
-							>{{
-								intNum(
-									realPricSale(
-										hotel.property.priceBreakdown.grossPrice.value,
-										hotel.property.priceBreakdown.excludedPrice.value,
-									),
-								)
-							}}</p
-						>
+							" -->
+						<p class="sale text-red-text text-sm line-through font-[500]">{{
+							intNum(
+								realPricSale(
+									hotel.property.priceBreakdown.grossPrice.value,
+									1,
+									// hotel.property.priceBreakdown.excludedPrice.value,
+								),
+							)
+						}}</p>
 						<p class="text-lg font-[500]">{{
 							intNum(hotel.property.priceBreakdown.grossPrice.value)
 						}}</p>
@@ -152,7 +151,6 @@
 		num = (5 * num) / 10;
 		return num;
 	};
-	console.log(intNum(getScore(7.4)));
 
 	const redirectHotelDetails = (id, hotel) => {
 		router.push({

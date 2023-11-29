@@ -65,6 +65,7 @@
 			</div>
 		</div>
 		<searchBar
+			:hotelsDetails="hotelsDetails"
 			:isAuth="isAuth"
 			class="relative top-[-50px] w-[89%]" />
 		<worningLetter />
@@ -99,7 +100,9 @@
 	const deg = ref('30');
 	const route = useRoute();
 	const isAuth = ref(false);
+	const hotelsDetails = ref(null);
 	isAuth.value = route.query.isAuth || false;
+
 	// Notification icon handel
 	const notWColor = ref(true);
 </script>

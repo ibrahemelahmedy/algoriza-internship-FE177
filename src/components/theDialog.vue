@@ -45,9 +45,9 @@
 </template>
 
 <script setup>
-	import { ref, defineProps } from 'vue';
-
+	import { ref, defineProps, onMounted } from 'vue';
 	const { isAuth, deg } = defineProps(['isAuth', 'deg']);
+
 	const dialogOpen = ref(false);
 
 	const checkAuth = () => {
