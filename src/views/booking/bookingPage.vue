@@ -119,6 +119,7 @@
 	// get hotelData
 	const hotels = ref([]);
 	const meta = ref([]);
+	// const page_number = ref(null);
 
 	const dataHotels = async () => {
 		const data = JSON.parse(await taskStore.getHotels());
@@ -133,6 +134,7 @@
 
 		return hotels, meta;
 	};
+
 	// get data from search bar
 	hotelsSearchDetails.value = { ...JSON.parse(route.query.hotelsDetails) };
 

@@ -165,10 +165,9 @@
 					</div>
 					<div class="side-part col-start-9 col-end-13">
 						<div class="w-full">
-							<img
+							<iframe
 								class="w-full rounded-md"
-								src="/src/assets/img/booking/hotel/hotelDetails/map.png"
-								alt="map" />
+								:src="`//maps.google.com/maps?q=${hotelDetails.lon},${hotelDetails.lon}&output=embed`"></iframe>
 						</div>
 						<div class="explore-area mt-[35px]">
 							<h3 class="text-xl font-[500] mb-[22px]">Explore the area</h3>
@@ -276,6 +275,8 @@
 		desc: '',
 		reviewNumber: '',
 		reviewscore: '',
+		lon: '',
+		lat: '',
 		price: '',
 		priceBeforeSale: '',
 		sale: '',
@@ -310,6 +311,8 @@
 	hotelDetails.value.id = route.query.id;
 	hotelDetails.value.reviewscore = route.query.reviewscore;
 	hotelDetails.value.desc = route.query.desc;
+	hotelDetails.value.lon = route.query.lon;
+	hotelDetails.value.lat = route.query.lat;
 
 	const facilities = ref([
 		{

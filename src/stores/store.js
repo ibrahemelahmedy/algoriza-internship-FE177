@@ -62,7 +62,7 @@ export const useTaskStore = defineStore('taskStore', {
 						method: 'GET',
 						headers: {
 							'X-RapidAPI-Key':
-								'ba60441698msh381a20fe52f110ep14de89jsnfc3f616c1144',
+								'ba33ae7dfbmshd0dbd19c66fb53ap187f5djsnc323136e04dd',
 							'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
 						},
 					},
@@ -83,7 +83,7 @@ export const useTaskStore = defineStore('taskStore', {
 						method: 'GET',
 						headers: {
 							'X-RapidAPI-Key':
-								'ba60441698msh381a20fe52f110ep14de89jsnfc3f616c1144',
+								'ba33ae7dfbmshd0dbd19c66fb53ap187f5djsnc323136e04dd',
 							'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
 						},
 					},
@@ -97,13 +97,14 @@ export const useTaskStore = defineStore('taskStore', {
 		},
 		async getHotels() {
 			try {
+				console.log(this.cityHotels);
 				const responsive = await fetch(
-					'https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=-290692&search_type=CITY&arrival_date=2023-12-06&departure_date=2023-12-26&adults=1&children_age=0%2C17&room_qty=1&page_number=1&price_max=50000&languagecode=en-us&currency_code=AED',
+					`https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${this.cityHotels.dest_id}&search_type=CITY&arrival_date=${this.cityHotels.arrival_date}&departure_date=${this.cityHotels.departure_date}&adults=${this.cityHotels.adults}&children_age=0%2C17&room_qty=${this.cityHotels.room_qty}&page_number=1&price_min=0&price_max=500000&sort_by=upsort_bh&languagecode=en-us&currency_code=AED`,
 					{
 						method: 'GET',
 						headers: {
 							'X-RapidAPI-Key':
-								'ba60441698msh381a20fe52f110ep14de89jsnfc3f616c1144',
+								'ba33ae7dfbmshd0dbd19c66fb53ap187f5djsnc323136e04dd',
 							'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
 						},
 					},
@@ -122,7 +123,7 @@ export const useTaskStore = defineStore('taskStore', {
 						method: 'GET',
 						headers: {
 							'X-RapidAPI-Key':
-								'ba60441698msh381a20fe52f110ep14de89jsnfc3f616c1144',
+								'ba33ae7dfbmshd0dbd19c66fb53ap187f5djsnc323136e04dd',
 							'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
 						},
 					},
@@ -137,4 +138,4 @@ export const useTaskStore = defineStore('taskStore', {
 	},
 });
 
-// `https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${this.cityHotels.dest_id}&search_type=CITY&arrival_date=${this.cityHotels.arrival_date}&departure_date=${this.cityHotels.departure_date}&adults=${this.cityHotels.adults}&children_age=0%2C17&room_qty=${this.cityHotels.room_qty}&page_number=1&price_min=0&price_max=500000&sort_by=upsort_bh&languagecode=en-us&currency_code=AED`;
+// 'https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=-290692&search_type=CITY&arrival_date=2023-12-06&departure_date=2023-12-26&adults=1&children_age=0%2C17&room_qty=1&page_number=1&price_max=50000&languagecode=en-us&currency_code=AED',

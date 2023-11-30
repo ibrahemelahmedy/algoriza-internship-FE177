@@ -3,7 +3,7 @@
 <template>
 	<article class="m-auto shadow-md rounded-lg">
 		<form
-			@click.prevent
+			@click.prevent="getId"
 			class="bg-white grid gap-3 rounded-xl py-3 px-4 grid-cols-[200px_repeat(5,130px)]">
 			<div class="search-handel country">
 				<label for="country"
@@ -80,6 +80,7 @@
 						alt="calender" />
 				</label>
 				<input
+					:readonly=""
 					@blur="checkRoom"
 					type="text"
 					id="roomsNum"
@@ -124,7 +125,7 @@
 	const taskStore = useTaskStore();
 
 	const { isAuth, hotelsDetails } = defineProps(['isAuth', 'hotelsDetails']);
-
+	// data from search
 	const hotelsSearchDetails = ref({
 		cityName: '',
 		dest_id: '',
@@ -192,11 +193,16 @@
 		const year = date.getFullYear();
 		return `${day}-${month}-${year}`;
 	};
-	const city = ref('');
 
 	//  send data with route
 	const router = useRouter();
-
+	// getId
+	const getId = () => {
+		if (localStorage.getItem('dest-id')) {
+			hotelsSearchDetails.value.dest_id = localStorage.getItem('dest-id');
+		}
+	};
+	// search action handling
 	const searchHandel = () => {
 		if (
 			hotelsSearchDetails.value.cityName !== '' &&
@@ -206,6 +212,7 @@
 			hotelsSearchDetails.value.room_qty !== '' &&
 			hotelsSearchDetails.value.adults > '0' &&
 			hotelsSearchDetails.value.room_qty > '0' &&
+			hotelsSearchDetails.value.dest_id !== '' &&
 			isAuth
 		) {
 			router.push({
@@ -222,14 +229,9 @@
 			});
 		}
 	};
+
 	onMounted(() => {
 		dataCities();
-		// // if (localStorage.getItem('dest_id')) {
-		// // 	hotelsSearchDetails.value.dest_id = JSON.parse(
-		// // 		localStorage.getItem('dest_id'),
-		// // 	);
-		// }
-		// get hotel-id
 
 		if (hotelsDetails) {
 			hotelsSearchDetails.value.arrival_date = hotelsDetails.arrival_date;

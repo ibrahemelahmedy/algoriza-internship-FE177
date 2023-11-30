@@ -8,6 +8,7 @@
 		<div class="relative mt-2">
 			<slot name="title">
 				<ListboxButton
+					@click="getId(selected)"
 					class="relative w-full cursor-pointer rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-inset focus:outline-none focus:ring-2 sm:text-sm sm:leading-6">
 					<span class="flex items-center">
 						<span class="ml-3 block truncate text-[11px] font-normal">{{
@@ -38,12 +39,12 @@
 							:value="city.name"
 							v-slot="{ active, selected }">
 							<li
+								@click="getId(city.dest_id)"
 								:class="[
 									active ? 'bg-indigo-600 text-white' : 'text-gray-900',
 									'relative cursor-pointer select-none py-[10px] border-b pl-3 pr-9 last:border-none   ',
 								]">
 								<div class="flex items-center w-fit mx-auto">
-									<!-- @click="getId(city.dest_id)" -->
 									<span
 										:class="[
 											selected ? 'font-semibold' : 'font-normal',
@@ -75,9 +76,15 @@
 	const cities = defineProps(['data']);
 	const route = useRoute();
 	const selected = ref('');
+	const getId = (id) => {
+		localStorage.setItem('dest-id', id);
+	};
+	const cityName = ref();
+	cityName.value = route.query.hotelsDetails;
+
 	onMounted(() => {
 		if (route.query.hotelsDetails) {
-			selected.value = route.query.hotelsDetails.cityName;
+			selected.value = JSON.parse(localStorage.getItem('citySelected'));
 		} else {
 			selected.value = 'Where are you going?';
 		}
