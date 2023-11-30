@@ -2,6 +2,7 @@
 
 <template>
 	<theHeader
+		:notWColor="notWColor"
 		:isAuth="isAuth"
 		class="header container items-start flex py-5">
 		<template v-slot:logo>
@@ -53,7 +54,8 @@
 	import theFooter from '../../components/theFooter.vue';
 	import { onMounted, provide, ref } from 'vue';
 	import { useRoute } from 'vue-router';
-	const isAuth = ref(true);
+	const isAuth = localStorage.getItem('isAuth');
+
 	const route = useRoute();
 	const hotels = ref([
 		{
@@ -83,6 +85,8 @@
 		hotels.value.push(hotel.value);
 	});
 	provide('data', hotels);
+	// Notification icon handel
+	const notWColor = ref(true);
 </script>
 
 <style scoped></style>

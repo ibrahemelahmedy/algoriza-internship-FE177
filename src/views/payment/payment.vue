@@ -38,6 +38,7 @@
 	</Teleport>
 
 	<theHeader
+		:notWColor="notWColor"
 		:isAuth="isAuth"
 		class="container items-center">
 		<template v-slot:logo>
@@ -112,7 +113,7 @@
 	import { useRouter } from 'vue-router';
 	const deg = ref('150');
 	const bookingSuc = ref(false);
-	const isAuth = ref(true);
+	const isAuth = localStorage.getItem('isAuth');
 	const bookingDone = () => {
 		bookingSuc.value = !bookingSuc.value;
 		return bookingSuc.value;
@@ -148,6 +149,8 @@
 			},
 		});
 	};
+	// Notification icon handel
+	const notWColor = ref(true);
 </script>
 
 <style scoped></style>

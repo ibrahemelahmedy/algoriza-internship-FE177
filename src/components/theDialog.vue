@@ -8,7 +8,7 @@
 				class="absolute top-0 left-0 bg-black opacity-10 h-[1820px] w-full"></section>
 		</slot>
 		<section
-			:class="deg ? `top-[${deg}%]` : ''"
+			:class="deg ? 'top-[150%]' : 'top-[30%]'"
 			class="bg-white absolute left-[35%] w-[400px] justify-center items-center flex flex-col rounded-xl">
 			<slot name="land">
 				<div class="head relative flex my-11">

@@ -47,6 +47,10 @@
 		localStorage.removeItem('userPassword');
 		localStorage.removeItem('token');
 		localStorage.removeItem('userEmail');
+		localStorage.removeItem('isAuth');
+		router.push({
+			name: 'signIn',
+		});
 	};
 </script>
 

@@ -184,7 +184,6 @@
 		}
 		return cities;
 	};
-
 	// handleDate
 	// In case of a range picker, you'll receive [Date, Date]
 	const format = (date) => {
@@ -193,6 +192,7 @@
 		const year = date.getFullYear();
 		return `${day}-${month}-${year}`;
 	};
+	const city = ref('');
 
 	//  send data with route
 	const router = useRouter();
@@ -224,10 +224,12 @@
 	};
 	onMounted(() => {
 		dataCities();
+		// // if (localStorage.getItem('dest_id')) {
+		// // 	hotelsSearchDetails.value.dest_id = JSON.parse(
+		// // 		localStorage.getItem('dest_id'),
+		// // 	);
+		// }
 		// get hotel-id
-		hotelsSearchDetails.value.dest_id = JSON.parse(
-			localStorage.getItem('dest_id'),
-		);
 
 		if (hotelsDetails) {
 			hotelsSearchDetails.value.arrival_date = hotelsDetails.arrival_date;

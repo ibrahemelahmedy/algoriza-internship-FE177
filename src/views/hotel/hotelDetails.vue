@@ -3,6 +3,7 @@
 <template>
 	<theHeader
 		:isAuth="isAuth"
+		:notWColor="notWColor"
 		class="container items-center">
 		<template v-slot:logo>
 			<RouterLink
@@ -42,8 +43,8 @@
 			<section class="landPart grid gap-5">
 				<div class="col-start-1 col-end-9">
 					<img
-						class="rounded-md"
-						src="/src/assets/img/booking/hotel/hotelDetails/1.png"
+						class="rounded-md w-[820px] h-[575px]"
+						:src="hotelDetails.img"
 						alt="firstImg" />
 				</div>
 				<div class="col-start-9 col-end-13">
@@ -74,37 +75,40 @@
 				</div>
 				<div class="details grid gap-[30px] mb-10">
 					<div class="main-part col-start-1 col-end-9">
-						<h2 class="w-full text-2xl font-bold">{{ hotelName }}</h2>
-						<div class="rate-part flex gap-3 mb-[17px] items-center">
+						<h2 class="w-full text-2xl font-bold">{{ hotelDetails.name }}</h2>
+						<div class="rate-part flex gap-2 mb-[17px]">
 							<ul class="flex">
-								<li
+								<li v-if="intNum(getScore(hotelDetails.reviewscore)) > 0"
 									><img
 										src="/src/assets/img/booking/rating/star-full.svg"
 										alt="full-star"
 								/></li>
-								<li
+								<li v-if="intNum(getScore(hotelDetails.reviewscore)) > 1"
 									><img
 										src="/src/assets/img/booking/rating/star-full.svg"
 										alt="full-star"
 								/></li>
-								<li
+								<li v-if="intNum(getScore(hotelDetails.reviewscore)) > 2"
 									><img
 										src="/src/assets/img/booking/rating/star-full.svg"
 										alt="full-star"
 								/></li>
-								<li
+								<li v-if="intNum(getScore(hotelDetails.reviewscore)) > 3"
 									><img
 										src="/src/assets/img/booking/rating/star-full.svg"
 										alt="full-star"
 								/></li>
-								<li
+								<li v-if="intNum(getScore(hotelDetails.reviewscore)) == 5"
 									><img
-										src="/src/assets/img/booking/rating/half-star.svg"
+										src="/src/assets/img/booking/rating/star-full.svg"
 										alt="half-star"
 								/></li>
 							</ul>
-							<p class="text-text-color font-[400] text-md"
-								>4.5 ({{ hotelReviewNum }} Reviews)</p
+							<p class="p-text"
+								>{{ intNum(getScore(hotelDetails.reviewscore)) }} ({{
+									hotelDetails.reviewNumber
+								}}
+								Reviews)</p
 							>
 						</div>
 						<!-- location -->
@@ -120,6 +124,7 @@
 
 							<div class="overview border-b pb-11 px-10 flex flex-col gap-7">
 								<h3 class="text-xl font-[500]">OverView</h3>
+								<p>{{ hotelDetails.desc }} </p>
 								<p
 									>Featuring free WiFi throughout the property, Lakeside Motel
 									Waterfront offers accommodations in Lakes Entrance, 19 mi from
@@ -235,7 +240,7 @@
 							</ul>
 							<button
 								class="btn mt-6 w-full py-3"
-								@click="redirect(hotelId, roomDetail.id, roomDetail)"
+								@click="redirect(hotelDetails.id)"
 								>Reserve suite
 							</button>
 						</div>
@@ -255,20 +260,56 @@
 	import theFooter from '../../components/theFooter.vue';
 	import { useRoute, useRouter } from 'vue-router';
 	import { ref } from 'vue';
+	import { useTaskStore } from '../../stores/store';
 
-	const isAuth = ref(false);
+	const isAuth = localStorage.getItem('isAuth');
+
 	const hotelName = ref('');
 	const hotelImg = ref('');
 	const hotelReviewNum = ref('');
 	const hotelId = ref('');
+	const hotelDetails = ref({
+		id: '',
+		img: '',
+		name: '',
+		title: '',
+		desc: '',
+		reviewNumber: '',
+		reviewscore: '',
+		price: '',
+		priceBeforeSale: '',
+		sale: '',
+		saleMsg: '',
+	});
+
+	// get hotel data from api
+	const hotelData = ref([]);
+	const taskStore = useTaskStore();
+
+	const getdatahotel = async () => {
+		const data = JSON.parse(await taskStore.getHotelDetails());
+
+		hotelData.value.push(data.data);
+
+		return hotelData;
+	};
+
+	// const dataForRoom = { ...taskStore.gethotelsRoomdata };
+	// const rooms = { ...dataForRoom[0][0].rooms };
+	// console.log(rooms[1102526520]);
+	// onMounted(() => {
+	// 	getdatahotel();
+	// 	taskStore.storeHotelDatawithroom(hotelData.value);
+	// });
 
 	const route = useRoute();
 
-	isAuth.value = route.query.isAuth;
-	hotelName.value = route.query.name;
-	hotelImg.value = route.query.img;
-	hotelReviewNum.value = route.query.reviewNumber;
-	hotelId.value = route.query.id;
+	hotelDetails.value.name = route.query.name;
+	hotelDetails.value.img = route.query.img;
+	hotelDetails.value.reviewNumber = route.query.reviewNumber;
+	hotelDetails.value.id = route.query.id;
+	hotelDetails.value.reviewscore = route.query.reviewscore;
+	hotelDetails.value.desc = route.query.desc;
 
 	const facilities = ref([
 		{
@@ -367,20 +408,22 @@
 	]);
 
 	const router = useRouter();
-	const redirect = (hotelId, roomId, roomDetail) => {
+	const redirect = () => {
 		router.push({
 			name: 'payment',
-			params: { hotelId: id, roomId: roomId },
-			query: {
-				isAuth: isAuth.value,
-				hotelImg: hotelImg.value,
-				hotelReviewNum: hotelReviewNum.value,
-				hotelName: hotelName.value,
-				id: hotelId.value,
-				roomPrice: roomDetail.roomPrice,
-			},
 		});
 	};
+	const intNum = (num) => {
+		num = Math.ceil(num);
+		return num;
+	};
+
+	const getScore = (num) => {
+		num = (5 * num) / 10;
+		return num;
+	};
+	// Notification icon handel
+	const notWColor = ref(true);
 </script>
 
 <style scoped>

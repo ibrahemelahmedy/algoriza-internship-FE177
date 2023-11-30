@@ -19,13 +19,18 @@
 					>{{ hotel.property.name }}</h3
 				>
 				<p
-					v-if="
-						hotel.property.priceBreakdown.strikethroughPrice.value &&
-						hotel.property.priceBreakdown.strikethroughPrice.value !== ''
-					"
-					:class="`bg-${hotel.salecolor}-text`"
-					class="text-white py-[3px] px-[8px] rounded-lg text-xs"
-					>{{ hotel.saleMsg }}</p
+					v-if="hotel.property.priceBreakdown.strikethroughPrice"
+					class="text-white bg-red-text py-[3px] px-[8px] rounded-lg text-xs"
+					>Book now and receive
+					{{
+						intNum(
+							degOfSal(
+								intNum(hotel.property.priceBreakdown.strikethroughPrice.value),
+								intNum(hotel.property.priceBreakdown.grossPrice.value),
+							),
+						)
+					}}
+					% off</p
 				>
 			</div>
 			<div class="rate-part flex gap-2 mb-[17px]">
@@ -67,20 +72,12 @@
 			<div class="description flex mb-[18px] justify-between">
 				<p class="text-[10px] w-[350px]">{{ hotel.accessibilityLabel }}</p>
 				<p
-					v-if="
-						hotel.property.priceBreakdown.strikethroughPrice.value &&
-						hotel.property.priceBreakdown.strikethroughPrice.value !== ''
-					"
+					v-if="hotel.property.priceBreakdown.strikethroughPrice"
 					class="over bg-green-text text-white text-xs py-[4px] px-[8px] text-start h-fit rounded-md">
 					{{
 						intNum(
 							degOfSal(
-								intNum(
-									realPricSale(
-										hotel.property.priceBreakdown.strikethroughPrice.value,
-										hotel.property.priceBreakdown.grossPrice.value,
-									),
-								),
+								intNum(hotel.property.priceBreakdown.strikethroughPrice.value),
 								intNum(hotel.property.priceBreakdown.grossPrice.value),
 							),
 						)
@@ -90,7 +87,7 @@
 			</div>
 			<div class="last-part flex justify-between items-center">
 				<button
-					@click="redirectHotelDetails(hotel.id, hotel)"
+					@click="redirectHotelDetails(hotel.hotel_id, hotel)"
 					class="btn px-4 py-[6px] h-fit"
 					>See availability
 				</button>
@@ -99,18 +96,10 @@
 					<div
 						class="price text-end mb-[6px] flex justify-end items-center gap-2">
 						<p
-							v-if="
-								hotel.property.priceBreakdown.strikethroughPrice.value &&
-								hotel.property.priceBreakdown.strikethroughPrice.value !== ''
-							"
+							v-if="hotel.property.priceBreakdown.strikethroughPrice"
 							class="sale text-red-text text-sm line-through font-[500]"
 							>{{
-								intNum(
-									realPricSale(
-										hotel.property.priceBreakdown.strikethroughPrice.value,
-										hotel.property.priceBreakdown.grossPrice.value,
-									),
-								)
+								intNum(hotel.property.priceBreakdown.strikethroughPrice.value)
 							}}</p
 						>
 						<p class="text-lg font-[500]">{{
@@ -138,11 +127,6 @@
 		return num;
 	};
 
-	const realPricSale = (totlal, saleValue) => {
-		const priceBeforeSale = totlal + saleValue;
-		return priceBeforeSale;
-	};
-
 	const degOfSal = (realPrice, total) => {
 		const sale = (realPrice - total) / 100;
 		return sale;
@@ -158,18 +142,20 @@
 			name: 'hotelDetails',
 			params: { id: id },
 			query: {
-				id: hotel.id,
-				img: hotel.img,
-				name: hotel.name,
+				id: hotel.hotel_id,
+				img: hotel.property.photoUrls[0],
+				name: hotel.property.name,
 				title: hotel.title,
-				desc: hotel.desc,
-				reviewNumber: hotel.reviewNumber,
-				price: hotel.price,
-				salePrice: hotel.salePrice,
+				desc: hotel.accessibilityLabel,
+				reviewNumber: hotel.property.reviewCount,
+				reviewscore: hotel.property.reviewScore,
+				price: hotel.property.priceBreakdown.grossPrice.value,
+				priceBeforeSale: hotel.property.priceBreakdown.strikethroughPrice.value,
+				lon: hotel.property.longitude,
+				lat: hotel.property.latitude,
+
 				sale: hotel.sale,
 				saleMsg: hotel.saleMsg,
-
-				salecolor: hotel.salecolor,
 
 				isAuth,
 			},

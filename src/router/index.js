@@ -8,9 +8,9 @@ import payment from '../views/payment/payment.vue';
 import myTrips from '../views/trips/myTrips.vue';
 import signIn from '../views/auth/signIn.vue';
 import register from '../views/auth/register.vue';
-
+let Auth = localStorage.getItem('isAuth');
 const router = createRouter({
-	history: createWebHistory(import.meta.env.BASE_URL),
+	history: createWebHistory(),
 	routes: [
 		{
 			path: '/',
@@ -21,23 +21,56 @@ const router = createRouter({
 			path: '/booking',
 			name: 'booking',
 			component: bookingPage,
+			beforeEnter: (to, _, next) => {
+				const isAuth = Auth;
+				if (!isAuth && to.name !== 'signIn') {
+					next({ name: 'signIn' });
+				} else {
+					next();
+				}
+			},
 		},
 		{
 			path: '/booking/:id',
 			name: 'hotelDetails',
 			component: hotelDetails,
 			props: true,
+			beforeEnter: (to, _, next) => {
+				const isAuth = Auth;
+				if (!isAuth && to.name !== 'signIn') {
+					next({ name: 'signIn' });
+				} else {
+					next();
+				}
+			},
 		},
 		{
 			path: '/payment',
 			name: 'payment',
 			component: payment,
 			props: true,
+			beforeEnter: (to, _, next) => {
+				const isAuth = Auth;
+				if (!isAuth && to.name !== 'signIn') {
+					next({ name: 'signIn' });
+				} else {
+					next();
+				}
+			},
 		},
+
 		{
 			path: '/myTrips',
 			name: 'myTrips',
 			component: myTrips,
+			beforeEnter: (to, _, next) => {
+				const isAuth = Auth;
+				if (!isAuth && to.name !== 'signIn') {
+					next({ name: 'signIn' });
+				} else {
+					next();
+				}
+			},
 		},
 		{
 			path: '/signIn',
@@ -48,14 +81,6 @@ const router = createRouter({
 			path: '/register',
 			name: 'register',
 			component: register,
-			// beforeEnter: (to, _, next) => {
-			// 	const isAuth = user.currentUser;
-			// 	if (!isAuth && to.name !== 'signIn') {
-			// 		next({ name: 'signIn' });
-			// 	} else {
-			// 		next();
-			// 	}
-			// },
 		},
 	],
 });

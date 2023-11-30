@@ -94,15 +94,18 @@
 	import nextTrip from './component/nextTrip.vue';
 	import popularHotels from './component/popularHotels.vue';
 	import appDowenload from './component/appDowenload.vue';
-	import { ref, onMounted } from 'vue';
-
+	import { ref } from 'vue';
 	import { useRoute } from 'vue-router';
-	const deg = ref('30');
-	const route = useRoute();
-	const isAuth = ref(false);
-	const hotelsDetails = ref(null);
-	isAuth.value = route.query.isAuth || false;
 
+	const deg = ref(false);
+
+	const isAuth = ref(false);
+	// const isAuth = localStorage.getItem('isAuth');
+	const hotelsDetails = ref(null);
+	const route = useRoute();
+	if (route.query) {
+		isAuth.value = route.query.isAuth;
+	}
 	// Notification icon handel
 	const notWColor = ref(true);
 </script>

@@ -1,7 +1,6 @@
 <!-- @format -->
 
 <template>
-	<!-- :class="position ? 'top-[2px] right-[10%]' : 'top-[4%] left-[3%]'" -->
 	<Listbox
 		class="absolute w-[190px] top-[4%] left-[3%]"
 		as="div"
@@ -11,11 +10,9 @@
 				<ListboxButton
 					class="relative w-full cursor-pointer rounded-md py-1.5 pl-3 pr-10 text-left shadow-sm ring-inset focus:outline-none focus:ring-2 sm:text-sm sm:leading-6">
 					<span class="flex items-center">
-						<span
-							@click="getId(selected)"
-							class="ml-3 block truncate text-[11px] font-normal"
-							>{{ selected }}</span
-						>
+						<span class="ml-3 block truncate text-[11px] font-normal">{{
+							selected
+						}}</span>
 					</span>
 					<span
 						class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -46,8 +43,8 @@
 									'relative cursor-pointer select-none py-[10px] border-b pl-3 pr-9 last:border-none   ',
 								]">
 								<div class="flex items-center w-fit mx-auto">
+									<!-- @click="getId(city.dest_id)" -->
 									<span
-										@click="getId(city.dest_id)"
 										:class="[
 											selected ? 'font-semibold' : 'font-normal',
 											'ml-3 block truncate ',
@@ -80,14 +77,12 @@
 	const selected = ref('');
 	onMounted(() => {
 		if (route.query.hotelsDetails) {
-			selected.value = JSON.parse(route.query.hotelsDetails).cityName;
+			selected.value = route.query.hotelsDetails.cityName;
 		} else {
 			selected.value = 'Where are you going?';
 		}
 	});
-	const getId = (id) => {
-		localStorage.setItem('dest_id', id);
-	};
+
 	watch(selected, (newSelect, _) => {
 		localStorage.setItem('citySelected', JSON.stringify(newSelect));
 	});

@@ -78,7 +78,12 @@
 				<p
 					v-if="!emailValid"
 					class="text-red-600">
-					this Email Not Exist
+					this Email Not Exist go and
+					<RouterLink
+						class="text-main-color inline-block"
+						:to="{ name: 'register' }"
+						>Register</RouterLink
+					>
 				</p>
 				<button
 					type="submit"
@@ -129,6 +134,7 @@
 		} else {
 			emailValid.value = true;
 			isAuth.value = true;
+			localStorage.setItem('isAuth', isAuth.value);
 			const redirectRouter = () => {
 				if (isAuth) {
 					router.push({

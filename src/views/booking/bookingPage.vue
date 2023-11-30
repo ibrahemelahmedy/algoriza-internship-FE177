@@ -96,9 +96,10 @@
 	const taskStore = useTaskStore();
 	const hotelsSearchDetails = ref({});
 	const sortValue = ref('');
-	const isAuth = ref(false);
+	const isAuth = localStorage.getItem('isAuth');
+
 	const route = useRoute();
-	isAuth.value = route.query.isAuth;
+
 	// sortby
 	const sortByReco = ref([]);
 	const dataSortBy = async () => {
