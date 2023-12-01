@@ -150,7 +150,8 @@
 				reviewNumber: hotel.property.reviewCount,
 				reviewscore: hotel.property.reviewScore,
 				price: hotel.property.priceBreakdown.grossPrice.value,
-				priceBeforeSale: hotel.property.priceBreakdown.strikethroughPrice.value,
+				// priceBeforeSale:
+				// 	hotel.property.priceBreakdown.strikethroughPrice.value || '0',
 				lon: hotel.property.longitude,
 				lat: hotel.property.latitude,
 

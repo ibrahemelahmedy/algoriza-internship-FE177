@@ -43,7 +43,7 @@
 			class="relative top-[-25px] w-[88%]" />
 		<article class="grid gap-[30px] mt-[30px]">
 			<section class="side-section max-w-[300px] col-start-1 col-end-2">
-				<propertyName />
+				<propertyName @searchHotelName="searchHotelName" />
 				<div class="filter-by">
 					<dailyBadget />
 					<rating />
@@ -71,7 +71,7 @@
 				</div>
 			</section>
 		</article>
-		<pagination />
+		<pagination :meta="parseInt(meta)" />
 		<worningLetter />
 		<theFooter />
 	</main>
@@ -91,15 +91,16 @@
 	import rating from './component/rating.vue';
 
 	import { useRoute } from 'vue-router';
-	import { onMounted, ref, watch } from 'vue';
+	import { onMounted, onUpdated, ref, watch } from 'vue';
 	import { useTaskStore } from '../../stores/store';
 	const taskStore = useTaskStore();
 	const hotelsSearchDetails = ref({});
 	const sortValue = ref('');
 	const isAuth = localStorage.getItem('isAuth');
+	const maxPrice = ref(0);
+	const minPrice = ref('');
 
 	const route = useRoute();
-
 	// sortby
 	const sortByReco = ref([]);
 	const dataSortBy = async () => {
@@ -110,11 +111,8 @@
 		}
 		return sortByReco;
 	};
-	dataSortBy();
-
-	watch(sortValue, (newSortValue) => {
-		console.log(newSortValue);
-	});
+	// get id when onUpdated
+	const sortById = ref('');
 
 	// get hotelData
 	const hotels = ref([]);
@@ -123,13 +121,14 @@
 
 	const dataHotels = async () => {
 		const data = JSON.parse(await taskStore.getHotels());
-		if (data.data.meta) {
-			meta.value.push(data.data.meta[0].title);
-		} else {
-			meta.value = '1200';
+		if (data.data?.meta) {
+			meta.value.push(data.data.meta[0]?.title);
 		}
-		for (let i = 0; i < data.data.hotels.length; i++) {
-			hotels.value.push(data.data.hotels[i]);
+
+		if (data.data) {
+			for (let i = 0; i < data.data.hotels.length; i++) {
+				hotels.value.push(data.data.hotels[i]);
+			}
 		}
 
 		return hotels, meta;
@@ -138,12 +137,31 @@
 	// get data from search bar
 	hotelsSearchDetails.value = { ...JSON.parse(route.query.hotelsDetails) };
 
-	onMounted(() => {
-		// call hotel storage
+	// handel sortBy select
+	watch(sortValue, (_) => {
+		sortById.value = localStorage.getItem('sort-id');
+		taskStore.sortId(sortById.value);
 		dataHotels();
+	});
+	// search with Hotel Name
+	const searchHotelName = (input) => {
+		return (hotels.value = hotels.value.filter((hotel) =>
+			hotel.property.name.toLowerCase().includes(input.toLowerCase()),
+		));
+	};
+
+	onMounted(() => {
+		// reset sortBy
+		localStorage.removeItem('sort-id');
+
 		// store hotels data
 		taskStore.storeHotelData(hotels.value);
 		taskStore.storeCityHotelData(hotelsSearchDetails.value);
+
+		// call hotel storage
+		dataHotels();
+		// get sort data
+		// dataSortBy(); //stoped to handel lower api request
 	});
 </script>
 
@@ -153,108 +171,3 @@
 		min-height: 200px;
 	}
 </style>
-<!-- const hotels = ref([
-		{
-			id: '1',
-			img: '/src/assets/img/booking/hotel/img/1.png',
-			name: 'Julia Dens Resort',
-			title: 'Live a little and celbrate with champagne',
-			desc: 'Reats include a glass of French champagne, parking and a late checkout. Gym included. Flexible cancellation applies',
-			reviewNumber: '1200',
-			price: '$130',
-			salePrice: '$150',
-			sale: true,
-			saleMsg: 'Book now and receive 15% off',
-
-			salecolor: 'red',
-		},
-		{
-			id: '2',
-			img: '/src/assets/img/booking/hotel/img/2.png',
-			name: 'Julia Dens Resort',
-			title: 'Live a little and celbrate with champagne',
-			desc: 'Reats include a glass of French champagne, parking and a late checkout. Gym included. Flexible cancellation applies',
-			reviewNumber: '1200',
-			price: '$240',
-			salePrice: '',
-			sale: false,
-			saleMsg: '',
-			salecolor: '',
-		},
-		{
-			id: '3',
-			img: '/src/assets/img/booking/hotel/img/3.png',
-			name: 'Julia Dens Resort',
-			title: 'Live a little and celbrate with champagne',
-			desc: 'Reats include a glass of French champagne, parking and a late checkout. Gym included. Flexible cancellation applies',
-			reviewNumber: '1200',
-			price: '$300',
-			salePrice: '',
-			sale: true,
-			saleMsg: 'Receive 30% discount on a restaurant',
-			salecolor: 'orang',
-		},
-		{
-			id: '4',
-			img: '/src/assets/img/booking/hotel/img/4.png',
-			name: 'Julia Dens Resort',
-			title: 'Live a little and celbrate with champagne',
-			desc: 'Reats include a glass of French champagne, parking and a late checkout. Gym included. Flexible cancellation applies',
-			reviewNumber: '1200',
-			price: '$120',
-			salePrice: '',
-			sale: false,
-		},
-		{
-			id: '5',
-			img: '/src/assets/img/booking/hotel/img/5.png',
-			name: 'Shanghai Open House',
-			title: 'Live a little and celbrate with champagne',
-			desc: 'Reats include a glass of French champagne, parking and a late checkout. Gym included. Flexible cancellation applies',
-			reviewNumber: '1200',
-			price: '$145',
-			salePrice: '',
-			sale: false,
-			saleMsg: '',
-			salecolor: '',
-		},
-		{
-			id: '6',
-			img: '/src/assets/img/booking/hotel/img/6.png',
-			name: 'Ocean Waves Resort',
-			title: 'Live a little and celbrate with champagne',
-			desc: 'Reats include a glass of French champagne, parking and a late checkout. Gym included. Flexible cancellation applies',
-			reviewNumber: '1200',
-			price: '$310',
-			salePrice: '',
-			sale: false,
-			saleMsg: '',
-			salecolor: '',
-		},
-		{
-			id: '7',
-			img: '/src/assets/img/booking/hotel/img/7.png',
-			name: 'Maimi City frontier',
-			title: 'Live a little and celbrate with champagne',
-			desc: 'Reats include a glass of French champagne, parking and a late checkout. Gym included. Flexible cancellation applies',
-			reviewNumber: '1200',
-			price: '$190',
-			salePrice: '$200',
-			sale: true,
-			saleMsg: 'Receive 30% discount on a restaurant',
-			salecolor: 'orang',
-		},
-		{
-			id: '8',
-			img: '/src/assets/img/booking/hotel/img/8.png',
-			name: 'Lakeside Motel Warefront',
-			title: 'Live a little and celbrate with champagne',
-			desc: 'Reats include a glass of French champagne, parking and a late checkout. Gym included. Flexible cancellation applies',
-			reviewNumber: '1200',
-			price: '$300',
-			salePrice: '$320',
-			sale: true,
-			saleMsg: '',
-			salecolor: '',
-		},
-	]); -->

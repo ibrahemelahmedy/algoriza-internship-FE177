@@ -3,7 +3,7 @@
 <template>
 	<article class="m-auto shadow-md rounded-lg">
 		<form
-			@click.prevent="getId"
+			@submit.prevent="searchHandel"
 			class="bg-white grid gap-3 rounded-xl py-3 px-4 grid-cols-[200px_repeat(5,130px)]">
 			<div class="search-handel country">
 				<label for="country"
@@ -13,6 +13,7 @@
 						alt="location" />
 				</label>
 				<div class="custom-select">
+					<!-- :readonly="hotelsDetails" -->
 					<selectBoxSearch
 						:data="cities"
 						v-model="hotelsSearchDetails.cityName"
@@ -27,6 +28,7 @@
 						src="/src/assets/img/searchBar/calendar 1.svg"
 						alt="calender" />
 				</label>
+				<!-- :readonly="hotelsDetails" -->
 				<VueDatePicker
 					:format="format"
 					@blur="onchang"
@@ -46,6 +48,7 @@
 						src="/src/assets/img/searchBar/calendar 1.svg"
 						alt="calender" />
 				</label>
+				<!-- :readonly="hotelsDetails" -->
 				<VueDatePicker
 					:format="format"
 					@blur="onchang"
@@ -64,6 +67,7 @@
 						src="/src/assets/img/searchBar/user-square 1.svg"
 						alt="calender" />
 				</label>
+				<!-- :readonly="hotelsDetails" -->
 				<input
 					@blur="checkGest"
 					type="text"
@@ -79,8 +83,8 @@
 						src="/src/assets/img/searchBar/room.svg"
 						alt="calender" />
 				</label>
+				<!-- :readonly="hotelsDetails" -->
 				<input
-					:readonly=""
 					@blur="checkRoom"
 					type="text"
 					id="roomsNum"
@@ -90,9 +94,10 @@
 			</div>
 			<button
 				class="btn"
-				@click="searchHandel"
+				type="submit"
 				>Search</button
 			>
+			<!-- @click="searchHandel" -->
 			<div
 				class="flex flex-col"
 				v-if="!allCheckWell">
@@ -138,7 +143,7 @@
 	const allCheckWell = ref(true);
 
 	// error msg handel
-
+	// function????
 	const chechDate = ref(true);
 	const onchang = computed(() => {
 		const now = new Date();
@@ -204,6 +209,7 @@
 	};
 	// search action handling
 	const searchHandel = () => {
+		getId();
 		if (
 			hotelsSearchDetails.value.cityName !== '' &&
 			hotelsSearchDetails.value.arrival_date !== '' &&
@@ -215,6 +221,7 @@
 			hotelsSearchDetails.value.dest_id !== '' &&
 			isAuth
 		) {
+			// to params or local storage??
 			router.push({
 				name: 'booking',
 				query: {
@@ -231,8 +238,7 @@
 	};
 
 	onMounted(() => {
-		dataCities();
-
+		// dataCities(); //stoped to handel lower api request
 		if (hotelsDetails) {
 			hotelsSearchDetails.value.arrival_date = hotelsDetails.arrival_date;
 			hotelsSearchDetails.value.departure_date = hotelsDetails.departure_date;

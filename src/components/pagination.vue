@@ -53,7 +53,7 @@
 					<a
 						href="#"
 						class="relative inline-flex items-center py-2 text-sm font-semibold ring-inset hover:bg-main-color hover:text-white px-4 rounded-lg text-gray-400 focus:z-20 focus:outline-offset-0"
-						>20</a
+						>{{ Math.ceil(props.meta / 20) }}</a
 					>
 					<a
 						href="#"
@@ -71,7 +71,7 @@
 
 <script setup>
 	import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/20/solid';
-
+	const props = defineProps(['meta']);
 	const items = [
 		{
 			id: 1,

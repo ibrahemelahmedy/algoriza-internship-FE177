@@ -19,6 +19,7 @@
 						v-else
 						class="flex items-center w-fit mx-auto overflow-hidden">
 						<span
+							@click="getId(selected)"
 							:class="[
 								selected ? 'font-semibold' : 'font-normal',
 								' block w-[185px]  ',
@@ -50,6 +51,7 @@
 							:value="sort.title"
 							v-slot="{ active, selected }">
 							<li
+								@click="getId(sort.id)"
 								:class="[
 									active ? 'bg-indigo-600 text-white' : 'text-gray-900',
 									'relative cursor-pointer select-none  border-b  last:border-none   ',
@@ -85,4 +87,7 @@
 	import { CheckIcon, ChevronDownIcon } from '@heroicons/vue/20/solid';
 	const sortByReco = defineProps(['data']);
 	const selected = ref('');
+	const getId = (id) => {
+		localStorage.setItem('sort-id', id);
+	};
 </script>

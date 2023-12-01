@@ -76,12 +76,12 @@
 	const cities = defineProps(['data']);
 	const route = useRoute();
 	const selected = ref('');
+	// set id in local Storage
 	const getId = (id) => {
 		localStorage.setItem('dest-id', id);
 	};
-	const cityName = ref();
-	cityName.value = route.query.hotelsDetails;
 
+	// check selected value
 	onMounted(() => {
 		if (route.query.hotelsDetails) {
 			selected.value = JSON.parse(localStorage.getItem('citySelected'));

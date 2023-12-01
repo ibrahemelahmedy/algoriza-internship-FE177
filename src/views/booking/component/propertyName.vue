@@ -12,6 +12,7 @@
 				alt="search" />
 			<input
 				v-model="searchPro"
+				@input="sendData"
 				class="pl-9 py-1 rounded-md shadow-sm w-full"
 				type="text"
 				name="search-by"
@@ -22,8 +23,13 @@
 
 <script setup>
 	import { ref } from 'vue';
-
 	const searchPro = ref('');
+
+	const emit = defineEmits();
+
+	const sendData = () => {
+		emit('searchHotelName', searchPro.value);
+	};
 </script>
 
 <style scoped></style>
