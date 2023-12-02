@@ -237,7 +237,7 @@
 	};
 
 	onMounted(() => {
-		// dataCities(); //stoped to handel lower api request
+		dataCities(); //stoped to handel lower api request
 		if (hotelsDetails) {
 			hotelsSearchDetails.value.arrival_date = hotelsDetails.arrival_date;
 			hotelsSearchDetails.value.departure_date = hotelsDetails.departure_date;

@@ -4,8 +4,9 @@
 	<Popover class="relative w-fit mx-auto border">
 		<PopoverButton
 			class="inline-flex p-2 items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-			<span>menu</span>
+			<span :class="!notWColor ? 'text-white' : ''">menu</span>
 			<ChevronDownIcon
+				:class="!notWColor ? 'text-white' : ''"
 				class="h-5 w-5"
 				aria-hidden="true" />
 		</PopoverButton>
@@ -111,6 +112,8 @@
 	const menuVisib = () => {
 		hidMenu.value = !hidMenu.value;
 	};
+	const { notWColor } = defineProps(['notWColor']);
+
 	const solutions = [
 		{
 			name: 'Home',

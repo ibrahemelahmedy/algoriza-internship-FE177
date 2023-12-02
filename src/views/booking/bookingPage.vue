@@ -3,10 +3,11 @@
 <template>
 	<theHeader
 		:isAuth="isAuth"
-		class="header container text-white items-start flex py-5">
+		:notWColor="notWColor"
+		class="header container md:flex text-white items-start py-5">
 		<template v-slot:logo>
 			<RouterLink
-				class="cursor-pointer flex gap-1"
+				class="cursor-pointer flex gap-1 w-fit mx-auto md:mx-0 transition-all"
 				:to="{ name: 'home' }">
 				<img
 					src="/src/assets/img/booking/header/logo.svg"
@@ -41,15 +42,15 @@
 			:isAuth="isAuth"
 			:hotelsDetails="hotelsSearchDetails"
 			class="relative top-[-25px] w-[88%]" />
-		<article class="grid gap-[30px] mt-[30px]">
-			<section class="side-section max-w-[300px] col-start-1 col-end-2">
+		<article class="grid gap-[30px] mt-[30px] ml-[-50px] lg:ml-o">
+			<section class="side-section max-w-[300px] lg:col-start-1 lg:col-end-2">
 				<propertyName @searchHotelName="searchHotelName" />
 				<div class="filter-by">
 					<dailyBadget />
 					<rating />
 				</div>
 			</section>
-			<section class="main-section col-start-2 col-end-13">
+			<section class="main-section lg:col-start-2 lg:col-end-13">
 				<div class="hotel-result">
 					<div class="title flex justify-between mb-12">
 						<h2 class="text-xl font-semibold"
@@ -70,8 +71,8 @@
 					</div>
 				</div>
 			</section>
+			<pagination :totalHotelsNumber="totalHotelsNumber" />
 		</article>
-		<pagination :meta="parseInt(meta)" />
 
 		<worningLetter />
 		<theFooter />
@@ -98,6 +99,10 @@
 	const hotelsSearchDetails = ref({});
 	const sortValue = ref('');
 	const isAuth = localStorage.getItem('isAuth');
+
+	// Notification icon color handel
+	const notWColor = ref(false);
+
 	const currentPage = ref(1);
 	const perPage = ref('');
 	const total = ref('');
@@ -122,27 +127,30 @@
 	// get hotelData
 	const hotels = ref([]);
 	const meta = ref([]);
+	const totalHotelsNumber = ref(null);
 	// const page_number = ref(null);
 
 	const dataHotels = async () => {
 		const data = JSON.parse(await taskStore.getHotels());
 		if (data.data?.meta) {
 			meta.value.push(data.data.meta[0]?.title);
+			totalHotelsNumber.value = +data.data.meta[0]?.title.split(' ')[0];
+			console.log(totalHotelsNumber.value);
 		}
 
 		if (data.data) {
-			for (let i = 0; i < data.data.hotels.length; i++) {
-				hotels.value.push(data.data.hotels[i]);
-			}
+			hotels.value = data.data.hotels;
+			// for (let i = 0; i < data.data.hotels.length; i++) {
+			// 	hotels.value.push(data.data.hotels[i]);
+			// }
 		}
+	};
 
-		return hotels, meta;
-	};
-	total.value = parseInt(meta.value);
-	perPage.value = parseInt(meta.value) / 20;
-	const pageChange = (pagNumber) => {
-		currentPage.value = pagNumber;
-	};
+	// total.value = parseInt(meta.value);
+	// perPage.value = parseInt(meta.value) / 20;
+	// const pageChange = (pagNumber) => {
+	// 	currentPage.value = pagNumber;
+	// };
 
 	// get data from search bar
 	hotelsSearchDetails.value = { ...JSON.parse(route.query.hotelsDetails) };
@@ -169,9 +177,9 @@
 		taskStore.storeCityHotelData(hotelsSearchDetails.value);
 
 		// call hotel storage
-		// dataHotels(); //stoped to handel lower api request
+		dataHotels(); //stoped to handel lower api request
 		// get sort data
-		// dataSortBy(); //stoped to handel lower api request
+		dataSortBy(); //stoped to handel lower api request
 	});
 </script>
 

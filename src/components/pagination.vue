@@ -33,17 +33,17 @@
 						href="#"
 						aria-current="page"
 						class="relative z-10 inline-flex items-center bg-main-color py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-main-color hover:text-white px-4 rounded-lg focus-visible:outline-indigo-600"
-						>1</a
+						>{{ currentPage }}</a
 					>
 					<a
 						href="#"
 						class="relative inline-flex items-center py-2 text-sm font-semibold ring-inset ring-gray-300 hover:bg-main-color hover:text-white px-4 rounded-lg text-gray-400 focus:z-20 focus:outline-offset-0"
-						>2</a
+						>{{ currentPage++ }}</a
 					>
 					<a
 						href="#"
 						class="relative hidden items-center py-2 text-sm font-semibold ring-inset ring-gray-300 hover:bg-main-color hover:text-white px-4 rounded-lg text-gray-400 focus:z-20 focus:outline-offset-0 md:inline-flex"
-						>3</a
+						>{{ currentPage++ }}</a
 					>
 					<span
 						class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-400 ring-inset ring-gray-300 focus:outline-offset-0"
@@ -53,7 +53,7 @@
 					<a
 						href="#"
 						class="relative inline-flex items-center py-2 text-sm font-semibold ring-inset hover:bg-main-color hover:text-white px-4 rounded-lg text-gray-400 focus:z-20 focus:outline-offset-0"
-						>{{ Math.ceil(props.meta / 20) }}</a
+						>{{ totalPages }}</a
 					>
 					<a
 						href="#"
@@ -71,7 +71,14 @@
 
 <script setup>
 	import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/20/solid';
-	const props = defineProps(['meta']);
+	import { ref, defineProps, onMounted } from 'vue';
+	// props???
+	const props = defineProps({
+		totalHotelsNumber: {
+			type: Number,
+		},
+	});
+	const currentPage = ref('1');
 	const items = [
 		{
 			id: 1,
@@ -95,4 +102,10 @@
 			location: 'Remote',
 		},
 	];
+	const totalPages = ref(null);
+	onMounted(() => {
+		if (Math.ceil(totalHotelsNumber.value / 20)) {
+			totalPages.value = Math.ceil(totalHotelsNumber.value / 20);
+		}
+	});
 </script>

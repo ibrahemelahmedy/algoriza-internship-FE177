@@ -23,8 +23,8 @@
 <script setup>
 	import { ref, defineEmits } from 'vue';
 	import { Switch } from '@headlessui/vue';
-	const emits = defineEmits();
-	const enabled = ref(true);
+	const emits = defineEmits(['toggleResult']);
+	const enabled = ref(false);
 	const sendToggleState = () => {
 		emits('toggleResult', enabled.value);
 	};

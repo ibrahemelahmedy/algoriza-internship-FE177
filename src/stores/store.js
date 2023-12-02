@@ -2,7 +2,7 @@
 
 import { defineStore } from 'pinia';
 const headerKey = {
-	'X-RapidAPI-Key': '9571d726a2msh47e449247d30032p17423ajsn8b9202545642',
+	'X-RapidAPI-Key': 'f17592ae15mshe99f08d9ed5bec8p16677bjsneb10997c1e34',
 	'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
 };
 export const useTaskStore = defineStore('taskStore', {
@@ -14,10 +14,10 @@ export const useTaskStore = defineStore('taskStore', {
 			adults: '',
 			room_qty: '',
 			sort_id: null,
+			page_number: '',
+			price_min: '',
+			price_max: '',
 		},
-		page_number: '',
-		price_min: '',
-		price_max: '',
 		hotel_id: '',
 		hotels: [],
 		hotelsRoomData: [],
@@ -99,7 +99,7 @@ export const useTaskStore = defineStore('taskStore', {
 		async getHotels() {
 			try {
 				const responsive = await fetch(
-					`https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${this.cityHotels.dest_id}&search_type=CITY&arrival_date=${this.cityHotels.arrival_date}&departure_date=${this.cityHotels.departure_date}&adults=${this.cityHotels.adults}&children_age=0%2C17&room_qty=${this.cityHotels.room_qty}&page_number=1&price_min=0&price_max=500000&sort_by=${this.cityHotels.sort_id}&languagecode=en-us&currency_code=AED`,
+					`https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${this.cityHotels.dest_id}&search_type=CITY&arrival_date=${this.cityHotels.arrival_date}&departure_date=${this.cityHotels.departure_date}&adults=${this.cityHotels.adults}&children_age=0%2C17&room_qty=${this.cityHotels.room_qty}&page_number=1&price_min=${this.cityHotels.price_min}&price_max=${this.cityHotels.price_max}&sort_by=${this.cityHotels.sort_id}&languagecode=en-us&currency_code=AED`,
 					{
 						method: 'GET',
 						headers: headerKey,

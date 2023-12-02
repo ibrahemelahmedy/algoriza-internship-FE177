@@ -4,23 +4,24 @@
 	<section
 		v-for="hotel in hotels"
 		:key="hotel"
-		class="card flex max-h-[240px] w-full border gap-6 p-3 rounded-md mb-[24px]">
+		class="card flex flex-col lg:flex-row min-h-fit h-[550px] lg:h-[230px] lg:max-h-[240px] w-[216px] lg:max-w-full lg:w-[750px] border gap-6 p-3 rounded-md mb-[24px]">
 		<div class="image"
 			><img
-				class="rounded-md h-[200px] max-w-[285px]"
+				class="rounded-md w-[200px] lg:h-[200px] lg:max-w-[285px] w-full"
 				:src="hotel.property.photoUrls[0]"
 				alt="hotel image"
 		/></div>
 
-		<div class="content flex-1">
-			<div class="first-part flex justify-between items-center mb-[10px]">
+		<div class="content lg:flex-1">
+			<div
+				class="first-part flex text-center lg:text-start justify-between items-center mb-[10px]">
 				<h3
 					class="font-medium text-md truncate hover:overflow-visible max-w-[300px]"
 					>{{ hotel.property.name }}</h3
 				>
 				<p
 					v-if="hotel.property.priceBreakdown.strikethroughPrice"
-					class="text-white bg-red-text py-[3px] px-[8px] rounded-lg text-xs"
+					class="text-white hidden lg:block bg-red-text py-[3px] px-[8px] rounded-lg text-xs"
 					>Book now and receive
 					{{
 						intNum(
@@ -68,12 +69,13 @@
 					Reviews)</p
 				>
 			</div>
-			<p class="p-text mb-2 font-[600]">{{ hotel.title }}</p>
-			<div class="description flex mb-[18px] justify-between">
-				<p class="text-[10px] w-[350px]">{{ hotel.accessibilityLabel }}</p>
+			<!-- <p class="p-text mb-2 font-[600]">{{ hotel.title }}</p> -->
+			<div
+				class="description flex-col lg:flex-row text-center lg:text-start flex mb-[18px] justify-between">
+				<p class="text-[10px] lg:w-[350px]">{{ hotel.accessibilityLabel }}</p>
 				<p
 					v-if="hotel.property.priceBreakdown.strikethroughPrice"
-					class="over bg-green-text text-white text-xs py-[4px] px-[8px] text-start h-fit rounded-md">
+					class="over hidden lg:block bg-green-text text-white text-xs py-[4px] px-[8px] text-start h-fit rounded-md">
 					{{
 						intNum(
 							degOfSal(
@@ -85,16 +87,17 @@
 					% off
 				</p>
 			</div>
-			<div class="last-part flex justify-between items-center">
+			<div
+				class="last-part flex flex-col-reverse lg:flex-row justify-center lg:justify-between items-center">
 				<button
 					@click="redirectHotelDetails(hotel.hotel_id, hotel)"
 					class="btn px-4 py-[6px] h-fit"
 					>See availability
 				</button>
 
-				<div class="prices">
+				<div class="prices text-center mb-3 lg:mb-0">
 					<div
-						class="price text-end mb-[6px] flex justify-end items-center gap-2">
+						class="price lg:text-end mb-[6px] flex lg:justify-end justify-center items-center gap-2">
 						<p
 							v-if="hotel.property.priceBreakdown.strikethroughPrice"
 							class="sale text-red-text text-sm line-through font-[500]"

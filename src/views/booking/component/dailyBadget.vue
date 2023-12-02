@@ -18,12 +18,12 @@
 
 						<input
 							v-model="badgetResult"
+							@click="handleFilterByPrice(badget.min, badget.max)"
 							class="absolute opacity-0"
 							type="radio"
 							:value="badget.value"
 							name="budget"
 							:id="badget.id" />
-						<p>{{ badgetResult }}</p>
 						<span
 							class="checkmark absolute top-0 left-0 h-5 w-5 rounded-md bg-white border cursor-pointer"></span>
 					</label>
@@ -39,10 +39,12 @@
 				</div>
 				<div class="max-min flex justify-between gap-9 mb-[19px]">
 					<input
+						:readonly="!enable"
 						class="border w-[90px] pl-3 pt-[11px] pb-3"
 						type="text"
 						placeholder="Min budget" />
 					<input
+						:readonly="!enable"
 						class="border w-[90px] pl-3 pt-[11px] pb-3"
 						type="text"
 						placeholder="Max budget" />
@@ -58,16 +60,21 @@
 	const badgetResult = ref('');
 	const enable = ref(false);
 	const badgets = ref([
-		{ value: '$ 0 - $ 200', num: '200', id: '1' },
-		{ value: '$ 200 - $ 500', num: '100', id: '2' },
-		{ value: '$ 500 - $ 1,000', num: '15', id: '3' },
-		{ value: '$ 1,000 - $ 2,000', num: '12', id: '4' },
-		{ value: '$ 2,000 - $ 5,000', num: '230', id: '5' },
+		{ value: '$ 0- $ 200', min: 0, max: 200, num: '200', id: '1' },
+		{ value: '$ 200 - $ 500', min: 200, max: 500, num: '100', id: '2' },
+		{ value: '$ 500 - $ 1,000', min: 500, max: 1000, num: '15', id: '3' },
+		{ value: '$ 1,000 - $ 2,000', min: 1000, max: 2000, num: '12', id: '4' },
+		{ value: '$ 2,000 - $ 5,000', min: 2000, max: 5000, num: '230', id: '5' },
 	]);
 	// get togle action
 	const toggleResult = (result) => {
+		console.log(result);
 		enable.value = result;
-		return enable.value;
+		console.log(enable.value);
+	};
+	const handleFilterByPrice = (min, max) => {
+		console.log(min);
+		console.log(max);
 	};
 </script>
 

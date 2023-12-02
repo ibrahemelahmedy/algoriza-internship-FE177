@@ -34,7 +34,7 @@
 		</div>
 		<div class="lg:justify-end lg:hidden transition-all">
 			<slot name="menu">
-				<menuList class=""> </menuList>
+				<menuList :notWColor="notWColor"> </menuList>
 			</slot>
 		</div>
 	</header>
