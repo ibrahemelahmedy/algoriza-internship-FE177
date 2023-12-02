@@ -2,7 +2,7 @@
 
 <template>
 	<section
-		class="warningLetter bg-[#FCEFCA] p-3 flex rounded-md text-md items-center gap-3">
+		class="warningLetter bg-[#FCEFCA] p-3 flex flex-col sm:flex-row rounded-md text-md items-center gap-3">
 		<div class="icon">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -30,7 +30,7 @@
 					stroke-linejoin="round" />
 			</svg>
 		</div>
-		<div class="warning">
+		<div class="warning text-center">
 			<p
 				>Check the latest COVID-19 restrictions before you travel.
 				<span class="text-main-color"> Learn more</span></p

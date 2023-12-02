@@ -1,12 +1,16 @@
+<!-- @format -->
 
 <template>
 	<section class="flex flex-col my-[50px]">
-		<div class="start-msg mb-8 w-3/5">
-			<h2 class="text-2xl font-semibold">Popular hotels</h2>
+		<div class="start-msg mb-8 sm:w-3/5">
+			<h2 class="sm:text-2xl text-center sm:text-start font-semibold mb-4"
+				>Popular hotels</h2
+			>
 		</div>
 		<div class="popularHotel">
-			<ul class="flex gap-4">
+			<ul class="flex gap-4 sm:flex-row flex-col">
 				<li
+					class="text-center sm:text-start"
 					v-for="popularHotel in popularHotels"
 					:key="popularHotel">
 					<img

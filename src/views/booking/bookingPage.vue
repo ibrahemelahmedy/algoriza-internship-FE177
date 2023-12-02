@@ -169,7 +169,7 @@
 		taskStore.storeCityHotelData(hotelsSearchDetails.value);
 
 		// call hotel storage
-		dataHotels();
+		// dataHotels(); //stoped to handel lower api request
 		// get sort data
 		// dataSortBy(); //stoped to handel lower api request
 	});

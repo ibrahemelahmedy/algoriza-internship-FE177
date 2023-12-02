@@ -9,25 +9,27 @@
 		</slot>
 		<section
 			:class="deg ? 'top-[150%]' : 'top-[30%]'"
-			class="bg-white absolute left-[35%] w-[400px] justify-center items-center flex flex-col rounded-xl">
+			class="bg-white absolute w-[150px] sm:w-[250px] sm:left-[35%] left-[33%] lg:w-[400px] justify-center items-center flex flex-col rounded-xl">
 			<slot name="land">
-				<div class="head relative flex my-11">
+				<div class="head relative flex sm:my-11 my-3">
 					<div
 						class="w-full h-full absolute bg-[#C1D9FA] z-0 rounded-tl-[150px] rounded-bl-[150px] rounded-tr-[150px] rounded-br-[150px]"></div>
 					<div class="img z-10 flex">
 						<img
+							class="w-[60px]"
 							src="../assets/img/dialog/man pic.svg"
 							alt="" />
 						<img
+							class="w-[80px]"
 							src="../assets/img/dialog/woman pic.svg"
 							alt="" />
 					</div>
 				</div>
 			</slot>
-			<div class="msg text-center mb-11">
+			<div class="msg text-center sm:mb-11">
 				<slot name="content">
 					<h2 class="mb-3">Welcome to My Dream Place</h2>
-					<p
+					<p class="hidden sm:block"
 						>You can now enjoy your travel experience with easy access to
 						resources and more</p
 					>
@@ -36,7 +38,7 @@
 			<slot name="button">
 				<button
 					@click="closeDialog"
-					class="btn w-[90%] py-[6px] mb-7"
+					class="btn w-[90%] sm:py-[6px] lg:mb-7 mb-3"
 					>Get Start</button
 				>
 			</slot>

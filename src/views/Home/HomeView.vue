@@ -14,7 +14,7 @@
 		class="container items-center">
 		<template v-slot:logo>
 			<RouterLink
-				class="cursor-pointer flex gap-1"
+				class="cursor-pointer flex gap-1 w-fit mx-auto md:mx-0 transition-all"
 				:to="{ name: 'home' }">
 				<img
 					src="/src/assets/img/home/logo.png"
@@ -30,14 +30,14 @@
 		<template v-slot:button>
 			<div
 				v-if="!isAuth"
-				class="flex gap-4">
+				class="flex lg:gap-4 gap-2 transition-all">
 				<router-link
-					class="btn px-3 py-2"
+					class="transition-all lg:btn lg:px-3 lg:py-2 px-1 py-1 w-fit bg-main-color font-[500] text-sm whitespace-nowrap text-white"
 					:to="{ name: 'register' }"
 					>Register</router-link
 				>
 				<router-link
-					class="btn px-3 py-2"
+					class="transition-all lg:btn lg:px-3 lg:py-2 px-1 py-1 w-fit bg-main-color font-[500] text-sm whitespace-nowrap text-white"
 					:to="{ name: 'signIn' }"
 					>Sign In</router-link
 				>
@@ -45,20 +45,22 @@
 		</template>
 	</theHeader>
 
-	<main class="container">
+	<main class="container h-[300px]">
 		<div class="landing relative py-2">
 			<div class="image"
 				><img
-					class="w-full"
+					class="w-full bg-cover"
 					src="../../assets/img/home/landScap.png"
 					alt=""
 			/></div>
 			<div
-				class="welcomeMsg flex flex-col absolute-center max-w-2xl text-center">
-				<h2 class="whitespace-nowrap text-white font-bold text-3xl pb-6"
+				class="welcomeMsg flex flex-col absolute-center md:max-w-2xl text-center transition-all">
+				<h2
+					class="whitespace-nowrap text-white md:font-bold text-xs md:text-3xl md:pb-6 font-[500] transition-all"
 					>Enjoy Your Dream Vacation</h2
 				>
-				<p class="text-white text-lg tracking-wider"
+				<p
+					class="text-white hidden md:block md:text-lg tracking-wider transition-all"
 					>Plan and book our perfect trip with expert advice, travel tips,
 					destination information and inspiration from us</p
 				>
@@ -67,7 +69,7 @@
 		<searchBar
 			:hotelsDetails="hotelsDetails"
 			:isAuth="isAuth"
-			class="relative top-[-50px] w-[89%]" />
+			class="relative md:top-[-50px] top-[-25px] w-[89%]" />
 		<worningLetter />
 		<yourVacation />
 		<nextTrip />
@@ -79,8 +81,8 @@
 			>
 			<p class="text-main-color text-lg">Discover new places and experiences</p>
 		</section>
+		<theFooter class="" />
 	</main>
-	<theFooter class="container" />
 </template>
 <script setup>
 	import theDialog from '../../components/theDialog.vue';

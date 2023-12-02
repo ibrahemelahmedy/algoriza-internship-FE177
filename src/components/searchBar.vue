@@ -4,7 +4,7 @@
 	<article class="m-auto shadow-md rounded-lg">
 		<form
 			@submit.prevent="searchHandel"
-			class="bg-white grid gap-3 rounded-xl py-3 px-4 grid-cols-[200px_repeat(5,130px)]">
+			class="bg-white grid gap-3 lg:gap-1 xl-gap-3 lg:py-2 lg:px-2 rounded-xl py-3 px-4 xl:py-3 xl:px-4 lg:grid-cols-[150px_120px_120px_repeat(3,80px)] xl:grid-cols-[200px_repeat(5,130px)]">
 			<div class="search-handel country">
 				<label for="country"
 					><img
@@ -17,7 +17,7 @@
 					<selectBoxSearch
 						:data="cities"
 						v-model="hotelsSearchDetails.cityName"
-						class="absolute"></selectBoxSearch>
+						class="absolute w-full"></selectBoxSearch>
 				</div>
 			</div>
 
@@ -93,7 +93,7 @@
 					v-model.trim="hotelsSearchDetails.room_qty" />
 			</div>
 			<button
-				class="btn"
+				class="btn lg:w-[110px] xl:w-[190px]"
 				type="submit"
 				>Search</button
 			>
@@ -103,7 +103,7 @@
 				v-if="!allCheckWell">
 				<p
 					v-if="!chechDate"
-					class="text-[10px] text-red-500 whitespace-nowrap">
+					class="text-[10px] text-red-500 lg:whitespace-nowrap">
 					Look at date again (target day after today and the check out after
 					previous date )</p
 				>

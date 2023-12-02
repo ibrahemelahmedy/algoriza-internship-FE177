@@ -2,17 +2,19 @@
 
 <template>
 	<footer class="pt-[70px]">
-		<section class="grid grid-cols-5 gap-3">
-			<div class="logoPart flex gap-2">
-				<div class="logo">
+		<section
+			class="grid lg:grid-cols-5 text-center lg:text-start lg:gap-3 gap-6">
+			<div class="logoPart flex lg:gap-2 justify-center">
+				<div class="logo h-[24px]">
 					<img
-						class=""
 						src="../assets/img/home/logo.png"
 						alt="logo" />
 				</div>
-				<div class="text flex-1">
-					<h2 class="font-semibold whitespace-nowrap mb-2">my Dream place</h2>
-					<p class="text-text-color text-xs"
+				<div class="text lg:flex-1 max-w-[160px]">
+					<h2 class="font-semibold whitespace-nowrap mb-2 w-fit ml-1"
+						>my Dream place</h2
+					>
+					<p class="text-text-color text-xs lg:mt-0 lg:ml-0 mt-3 ml-[-20px]"
 						>Your next goto companion for travel</p
 					></div
 				>
@@ -32,7 +34,9 @@
 				<ul>
 					<li>Australia</li>
 					<li>New Zealand</li>
-					<li>United States America (USA)</li>
+					<li class="lg:truncate lg:hover:overflow-visible"
+						>United States America (USA)</li
+					>
 					<li>Greece</li>
 					<li>Maldives</li>
 					<li>Singapore</li>
@@ -59,7 +63,8 @@
 				</ul>
 			</div>
 		</section>
-		<section class="copyRight bg-gray-100 text-text-color flex justify-around">
+		<section
+			class="copyRight bg-gray-100 text-text-color flex justify-center lg:justify-around">
 			<p></p>
 			<p class="text-sm py-2">&copy; my Dream Place 2022</p>
 		</section>

@@ -7,19 +7,23 @@
 				class="cursor-pointer flex gap-1"
 				:to="{ name: 'home' }">
 				<img
-					class=""
 					src="/src/assets/img/home/logo.png"
 					alt="logo" />
-				<h1 class="font-medium tracking-wide whitespace-nowrap"
+				<h1 class="font-[500] tracking-wide whitespace-nowrap"
 					>my Dream place</h1
 				>
 			</RouterLink>
 		</template>
+		<template v-slot:menu>
+			<div class="hidden"></div>
+		</template>
 	</theHeader>
 	<main class="h-[100vh] mt-[80px]">
-		<article class="mx-auto w-[400px]">
+		<article class="mx-auto md:w-[400px]">
 			<h1 class="text-2xl font-semibold text-center mb-12">Register</h1>
-			<form @submit.prevent="submitForm">
+			<form
+				@submit.prevent="submitForm"
+				class="w-[300px] mx-auto md:w-[400px] transition-all">
 				<div class="email flex flex-col">
 					<label
 						for="email"
