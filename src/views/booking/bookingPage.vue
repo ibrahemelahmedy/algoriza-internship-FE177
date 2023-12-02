@@ -72,6 +72,7 @@
 			</section>
 		</article>
 		<pagination :meta="parseInt(meta)" />
+
 		<worningLetter />
 		<theFooter />
 	</main>
@@ -91,13 +92,17 @@
 	import rating from './component/rating.vue';
 
 	import { useRoute } from 'vue-router';
-	import { onMounted, onUpdated, ref, watch } from 'vue';
+	import { onMounted, ref, watch } from 'vue';
 	import { useTaskStore } from '../../stores/store';
 	const taskStore = useTaskStore();
 	const hotelsSearchDetails = ref({});
 	const sortValue = ref('');
 	const isAuth = localStorage.getItem('isAuth');
-	const maxPrice = ref(0);
+	const currentPage = ref(1);
+	const perPage = ref('');
+	const total = ref('');
+
+	const maxPrice = ref('');
 	const minPrice = ref('');
 
 	const route = useRoute();
@@ -132,6 +137,11 @@
 		}
 
 		return hotels, meta;
+	};
+	total.value = parseInt(meta.value);
+	perPage.value = parseInt(meta.value) / 20;
+	const pageChange = (pagNumber) => {
+		currentPage.value = pagNumber;
 	};
 
 	// get data from search bar

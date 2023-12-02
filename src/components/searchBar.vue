@@ -124,7 +124,7 @@
 
 <script setup>
 	import selectBoxSearch from './selectBoxSearch.vue';
-	import { computed, ref, defineProps, onMounted } from 'vue';
+	import { ref, defineProps, onMounted } from 'vue';
 	import { useRouter } from 'vue-router';
 	import { useTaskStore } from '../stores/store';
 	const taskStore = useTaskStore();
@@ -143,9 +143,8 @@
 	const allCheckWell = ref(true);
 
 	// error msg handel
-	// function????
 	const chechDate = ref(true);
-	const onchang = computed(() => {
+	const onchang = () => {
 		const now = new Date();
 		const dateIn = new Date(hotelsSearchDetails.value.arrival_date);
 		const dateOut = new Date(hotelsSearchDetails.value.departure_date);
@@ -156,9 +155,9 @@
 			chechDate.value = false;
 			allCheckWell.value = false;
 		}
-	});
+	};
 	const checkGestNum = ref(true);
-	const checkGest = computed(() => {
+	const checkGest = () => {
 		checkGestNum.value = true;
 		allCheckWell.value = false;
 
@@ -166,9 +165,9 @@
 			checkGestNum.value = false;
 			allCheckWell.value = false;
 		}
-	});
+	};
 	const checkRoomNum = ref(true);
-	const checkRoom = computed(() => {
+	const checkRoom = () => {
 		checkRoomNum.value = true;
 		allCheckWell.value = true;
 
@@ -176,7 +175,7 @@
 			checkRoomNum.value = false;
 			allCheckWell.value = false;
 		}
-	});
+	};
 
 	// handel city from api
 	const cities = ref([]);

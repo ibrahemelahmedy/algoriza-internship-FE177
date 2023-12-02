@@ -4,6 +4,7 @@
 	<div>
 		<Switch
 			v-model="enabled"
+			@click="sendToggleState"
 			:class="enabled ? ' bg-green-600' : 'bg-toggle-bg'"
 			class="relative inline-flex h-[15px] w-[20px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
 			<span class="sr-only top-[50%]">Use setting</span>
@@ -20,8 +21,11 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue';
+	import { ref, defineEmits } from 'vue';
 	import { Switch } from '@headlessui/vue';
-
-	const enabled = ref(false);
+	const emits = defineEmits();
+	const enabled = ref(true);
+	const sendToggleState = () => {
+		emits('toggleResult', enabled.value);
+	};
 </script>

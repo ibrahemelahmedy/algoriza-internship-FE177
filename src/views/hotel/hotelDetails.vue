@@ -43,7 +43,7 @@
 			<section class="landPart grid gap-5">
 				<div class="col-start-1 col-end-9">
 					<img
-						class="rounded-md w-[820px] h-[835px]"
+						class="rounded-md w-[820px] max-h-[590px]"
 						:src="hotelDetails.img"
 						alt="firstImg" />
 				</div>
@@ -184,18 +184,14 @@
 
 	const getdatahotel = async () => {
 		const data = JSON.parse(await taskStore.getHotelDetails());
-		hotelData.value.push(data.data);
+		console.log(data.data);
+		hotelData.value.push(data);
 
 		return hotelData.value;
 	};
 
-	console.log(hotelData.value);
-
-	// const dataForRoom = { ...taskStore.gethotelsRoomdata };
-	// const rooms = { ...dataForRoom };
-	// console.log(rooms);
 	onMounted(() => {
-		getdatahotel();
+		// getdatahotel();
 		taskStore.storeHotelDatawithroom(hotelData.value);
 	});
 

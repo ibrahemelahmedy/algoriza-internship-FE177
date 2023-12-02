@@ -2,7 +2,7 @@
 
 import { defineStore } from 'pinia';
 const headerKey = {
-	'X-RapidAPI-Key': '0760837e45mshb260b155ec7c79cp12861cjsn14d3ec8b9fce',
+	'X-RapidAPI-Key': '9571d726a2msh47e449247d30032p17423ajsn8b9202545642',
 	'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
 };
 export const useTaskStore = defineStore('taskStore', {
