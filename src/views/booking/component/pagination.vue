@@ -102,6 +102,6 @@
 		// Fetch data, update component state, etc.
 		localStorage.setItem('currentPage', newPage || 1);
 		taskStore.getPageNumber(newPage || currentPage.value);
-		emits('getPage', currentPage);
+		emits('getPage', currentPage.value);
 	});
 </script>

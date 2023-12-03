@@ -114,15 +114,6 @@
 	// Notification icon color handel
 	const notWColor = ref(false);
 
-	// padination
-	const totalHotelsNumber = ref(null);
-
-	const getPage = () => {
-		if (localStorage.getItem('currentPage')) {
-			currentPage.value = JSON.parse(localStorage.getItem('currentPage'));
-			taskStore.getPageNumber(currentPage.value);
-		}
-	};
 	// sortby
 	const sortByReco = ref([]);
 	const dataSortBy = async () => {
@@ -208,6 +199,15 @@
 		minPrice.value = min;
 		taskStore.getPriceRang(minPrice.value, maxPrice.value);
 		dataHotels();
+	};
+	// padination
+	const totalHotelsNumber = ref(null);
+	const currentPage = ref(1);
+	const getPage = (results) => {
+		currentPage.value = results;
+		watch(currentPage.value, () => {
+			dataHotels();
+		});
 	};
 </script>
 
