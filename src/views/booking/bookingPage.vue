@@ -115,12 +115,7 @@
 	const notWColor = ref(false);
 
 	// padination
-	const currentPage = ref(1);
 	const totalHotelsNumber = ref(null);
-	const perPage = ref(20);
-	const pageChange = (pageNumber) => {
-		currentPage.value = pageNumber;
-	};
 
 	const getPage = () => {
 		if (localStorage.getItem('currentPage')) {

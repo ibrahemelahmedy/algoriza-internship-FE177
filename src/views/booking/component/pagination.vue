@@ -47,6 +47,8 @@
 	import { useTaskStore } from '../../../stores/store';
 	const taskStore = useTaskStore();
 	const totalPages = ref(null);
+	const emits = defineEmits('getPage');
+
 	onMounted(() => {
 		if (localStorage.getItem('totalHotels')) {
 			totalPages.value = Math.ceil(
@@ -100,5 +102,6 @@
 		// Fetch data, update component state, etc.
 		localStorage.setItem('currentPage', newPage || 1);
 		taskStore.getPageNumber(newPage || currentPage.value);
+		emits('getPage', currentPage);
 	});
 </script>
