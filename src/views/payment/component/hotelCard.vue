@@ -80,9 +80,8 @@
 </template>
 
 <script setup>
-	import { defineProps, onMounted, ref } from 'vue';
+	import { defineProps } from 'vue';
 
-	// const hotelDetails = ref(null);
 	const { hotelDetails } = defineProps(['hotelDetails']);
 	// return integer number
 	const intNum = (num) => {

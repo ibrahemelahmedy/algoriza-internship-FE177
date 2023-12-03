@@ -61,14 +61,15 @@
 		{
 			id: '1',
 			name: 'Lakeside Motel Warefront',
-			img: 'src/assets/img/booking/hotel/hotelDetails/2.png',
+			img: '/src/assets/img/booking/hotel/hotelDetails/2.png',
 
-			rate: '5',
-			review: '1200',
-			checkIn: ' Sunday, March 18, 2022',
-			checkOut: 'Tuesday, March 20, 2022',
+			reviewscore: '0',
+			reviewNumber: '1200',
+
+			checkin: ' Sunday, March 18, 2022',
+			checkout: 'Tuesday, March 20, 2022',
 			priceBefDes: '$150',
-			priceAfterDes: '$130',
+			price: '130',
 		},
 	]);
 	const hotel = ref({

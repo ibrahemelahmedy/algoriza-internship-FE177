@@ -93,7 +93,9 @@
 				</section>
 				<section class="side-section col-start-7 col-end-13">
 					<hotelcard :hotelDetails="hotelDetails" />
-					<priceDetails class="mt-[30px]" />
+					<priceDetails
+						:hotelDetails="hotelDetails"
+						class="mt-[30px]" />
 				</section>
 			</section>
 		</article>
