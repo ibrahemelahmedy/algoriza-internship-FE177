@@ -31,10 +31,10 @@ const router = createRouter({
 			},
 		},
 		{
-			path: '/booking/:id',
+			path: '/booking/:hotelId',
 			name: 'hotelDetails',
 			component: hotelDetails,
-			props: true,
+
 			beforeEnter: (to, _, next) => {
 				const isAuth = Auth;
 				if (!isAuth && to.name !== 'signIn') {

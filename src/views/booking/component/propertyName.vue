@@ -25,7 +25,7 @@
 	import { ref } from 'vue';
 	const searchPro = ref('');
 
-	const emit = defineEmits();
+	const emit = defineEmits(['searchHotelName']);
 
 	const sendData = () => {
 		emit('searchHotelName', searchPro.value);

@@ -46,8 +46,8 @@
 			<section class="side-section max-w-[300px] lg:col-start-1 lg:col-end-2">
 				<propertyName @searchHotelName="searchHotelName" />
 				<div class="filter-by">
-					<dailyBadget />
-					<rating />
+					<dailyBadget @maxMinValue="maxMinValue" />
+					<rating @searchRate="searchRate" />
 				</div>
 			</section>
 			<section class="main-section lg:col-start-2 lg:col-end-13">
@@ -71,8 +71,8 @@
 					</div>
 				</div>
 			</section>
-			<pagination :totalHotelsNumber="totalHotelsNumber" />
 		</article>
+		<pagination :totalHotelsNumber="totalHotelsNumber" />
 
 		<worningLetter />
 		<theFooter />
@@ -93,22 +93,27 @@
 	import rating from './component/rating.vue';
 
 	import { useRoute } from 'vue-router';
-	import { onMounted, ref, watch } from 'vue';
+	import { onMounted, ref, watch, watchEffect } from 'vue';
 	import { useTaskStore } from '../../stores/store';
 	const taskStore = useTaskStore();
 	const hotelsSearchDetails = ref({});
 	const sortValue = ref('');
 	const isAuth = localStorage.getItem('isAuth');
-
+	//functionality to handle number
+	const intNum = (num) => {
+		num = Math.ceil(num);
+		return num;
+	};
+	const getScore = (num) => {
+		num = (5 * num) / 10;
+		return num;
+	};
 	// Notification icon color handel
 	const notWColor = ref(false);
 
-	const currentPage = ref(1);
-	const perPage = ref('');
-	const total = ref('');
-
-	const maxPrice = ref('');
-	const minPrice = ref('');
+	// const currentPage = ref(1);
+	// const perPage = ref('');
+	// const total = ref('');
 
 	const route = useRoute();
 	// sortby
@@ -126,31 +131,23 @@
 
 	// get hotelData
 	const hotels = ref([]);
+	const hotelsBase = ref([]);
+
 	const meta = ref([]);
 	const totalHotelsNumber = ref(null);
-	// const page_number = ref(null);
 
 	const dataHotels = async () => {
 		const data = JSON.parse(await taskStore.getHotels());
 		if (data.data?.meta) {
 			meta.value.push(data.data.meta[0]?.title);
 			totalHotelsNumber.value = +data.data.meta[0]?.title.split(' ')[0];
-			console.log(totalHotelsNumber.value);
 		}
 
 		if (data.data) {
+			hotelsBase.value = data.data.hotels;
 			hotels.value = data.data.hotels;
-			// for (let i = 0; i < data.data.hotels.length; i++) {
-			// 	hotels.value.push(data.data.hotels[i]);
-			// }
 		}
 	};
-
-	// total.value = parseInt(meta.value);
-	// perPage.value = parseInt(meta.value) / 20;
-	// const pageChange = (pagNumber) => {
-	// 	currentPage.value = pagNumber;
-	// };
 
 	// get data from search bar
 	hotelsSearchDetails.value = { ...JSON.parse(route.query.hotelsDetails) };
@@ -163,9 +160,21 @@
 	});
 	// search with Hotel Name
 	const searchHotelName = (input) => {
-		return (hotels.value = hotels.value.filter((hotel) =>
+		hotels.value = hotelsBase.value;
+
+		hotels.value = hotels.value.filter((hotel) =>
 			hotel.property.name.toLowerCase().includes(input.toLowerCase()),
-		));
+		);
+	};
+
+	// filtration for rate
+
+	const searchRate = (rate) => {
+		hotels.value = hotelsBase.value;
+
+		hotels.value = hotels.value.filter(
+			(hotel) => intNum(getScore(hotel.property.reviewScore)) === rate,
+		);
 	};
 
 	onMounted(() => {
@@ -179,8 +188,17 @@
 		// call hotel storage
 		dataHotels(); //stoped to handel lower api request
 		// get sort data
-		dataSortBy(); //stoped to handel lower api request
+		// dataSortBy(); //stoped to handel lower api request
 	});
+
+	const maxPrice = ref(null);
+	const minPrice = ref(null);
+	const maxMinValue = (min, max) => {
+		maxPrice.value = max;
+		minPrice.value = min;
+		taskStore.getPriceRang(minPrice.value, maxPrice.value);
+		dataHotels();
+	};
 </script>
 
 <style scoped>

@@ -92,7 +92,7 @@
 					</importInfo>
 				</section>
 				<section class="side-section col-start-7 col-end-13">
-					<hotelcard />
+					<hotelcard :hotelDetails="hotelDetails" />
 					<priceDetails class="mt-[30px]" />
 				</section>
 			</section>
@@ -109,7 +109,7 @@
 	import importInfo from './component/importInfo.vue';
 	import hotelcard from './component/hotelCard.vue';
 	import priceDetails from './component/priceDetails.vue';
-	import { ref } from 'vue';
+	import { onMounted, ref } from 'vue';
 	import { useRouter } from 'vue-router';
 	const deg = ref('150');
 	const bookingSuc = ref(false);
@@ -121,34 +121,40 @@
 	const closeDialog = () => {
 		bookingSuc.value = false;
 	};
-	const newHotel = ref({
-		id: '2',
-		name: 'Lakeside Motel Warefront',
-		img: '/src/assets/img/booking/payment/hotelDetails/hotel-img.png',
-		rate: '5',
-		review: '1200',
-		checkIn: ' Sunday, March 18, 2022',
-		checkOut: 'Tuesday, March 20, 2022',
-		priceBefDes: '$150',
-		priceAfterDes: '$130',
-	});
+
+	const hotelDetails = ref({});
+
+	// const hotelDetails = ref({
+	// 	id: '2',
+	// 	name: 'Lakeside Motel Warefront',
+	// 	img: '/src/assets/img/booking/payment/hotelDetails/hotel-img.png',
+	// 	rate: '5',
+	// 	review: '1200',
+	// 	checkIn: ' Sunday, March 18, 2022',
+	// 	checkOut: 'Tuesday, March 20, 2022',
+	// 	priceBefDes: '$150',
+	// 	priceAfterDes: '$130',
+	// });
 	const router = useRouter();
 	const redirect = () => {
 		router.push({
 			name: 'myTrips',
 			query: {
-				id: newHotel.value.id,
-				img: newHotel.value.img,
-				name: newHotel.value.name,
-				rate: newHotel.value.rate,
-				review: newHotel.value.review,
-				checkIn: newHotel.value.checkIn,
-				checkOut: newHotel.value.checkOut,
-				priceBefDes: newHotel.value.priceBefDes,
-				priceAfterDes: newHotel.value.priceAfterDes,
+				id: hotelDetails.value.id,
+				img: hotelDetails.value.img,
+				name: hotelDetails.value.name,
+				rate: hotelDetails.value.rate,
+				review: hotelDetails.value.review,
+				checkIn: hotelDetails.value.checkIn,
+				checkOut: hotelDetails.value.checkOut,
+				priceBefDes: hotelDetails.value.priceBefDes,
+				priceAfterDes: hotelDetails.value.priceAfterDes,
 			},
 		});
 	};
+	onMounted(() => {
+		hotelDetails.value = JSON.parse(localStorage.getItem('hotelDetails'));
+	});
 	// Notification icon handel
 	const notWColor = ref(true);
 </script>

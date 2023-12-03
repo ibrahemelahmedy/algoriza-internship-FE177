@@ -49,12 +49,20 @@
 				</div>
 				<div class="col-start-9 col-end-13">
 					<img
-						class="rounded-md mb-4"
-						src="/src/assets/img/booking/hotel/hotelDetails/2.png"
+						class="rounded-md mb-4 h-[289px] w-[341px]"
+						:src="
+							nestedRooms
+								? nestedRooms['photos']['2']['url_original']
+								: '/src/assets/img/booking/hotel/hotelDetails/2.png'
+						"
 						alt="secondImg" />
 					<img
-						class="rounded-md"
-						src="/src/assets/img/booking/hotel/hotelDetails/3.png"
+						class="rounded-md h-[289px] w-[341px]"
+						:src="
+							nestedRooms
+								? nestedRooms['photos']['4']['url_original']
+								: '/src/assets/img/booking/hotel/hotelDetails/2.png'
+						"
 						alt="thirdImg" />
 				</div>
 			</section>
@@ -120,7 +128,9 @@
 						</div>
 						<!-- description -->
 						<div class="bg-white mt-[30px] mb rounded-md">
-							<overView :hotelDetails="hotelDetails" />
+							<Suspense>
+								<overView :hotelDetails="hotelDetails" />
+							</Suspense>
 						</div>
 					</div>
 					<div class="side-part col-start-9 col-end-13">
@@ -142,20 +152,22 @@
 									alt="Logo" />
 								<p class="text-xl font-[500]">my Dream Place</p>
 							</div>
-							<p class="font-[600] text-2xl">20% off </p>
-							<p class="font-[600] text-2xl w-[200px]"
+							<p class="font-[600] text-xl">20% off </p>
+							<p class="font-[600] text-xl w-[200px]"
 								>Use Promotional Coupon Code:
 							</p>
 							<p class="font-[600] text-2xl text-[#FFD723]">Orlando</p>
 						</div>
-						<div class="image absolute top-[-10%] right-[-10%] ]">
+						<div class="image absolute lg:top-[-10%] lg:right-[-20%] ]">
 							<img
-								class="w-[350px] h-[420px]"
+								class="w-[300px] h-[420px]"
 								src="/src/assets/img/booking/hotel/hotelDetails/man-edit.png"
 								alt="man" />
 						</div>
 					</div>
-					<roomCard />
+					<Suspense>
+						<roomCard />
+					</Suspense>
 				</div>
 			</section>
 		</article>
@@ -182,18 +194,13 @@
 	const hotelData = ref({});
 	const taskStore = useTaskStore();
 
+	const nestedRooms = ref(null);
+
 	const getdatahotel = async () => {
 		const data = JSON.parse(await taskStore.getHotelDetails());
-		console.log(data.data);
-		hotelData.value.push(data);
-
-		return hotelData.value;
+		hotelData.value = await data.data; //hotildetails
+		nestedRooms.value = Object.values(data.data.rooms)[0];
 	};
-
-	onMounted(() => {
-		// getdatahotel();
-		taskStore.storeHotelDatawithroom(hotelData.value);
-	});
 
 	// restore data from query
 	const hotelDetails = ref({
@@ -207,20 +214,13 @@
 		lon: '',
 		lat: '',
 		price: '',
+		checkin: '',
+		checkout: '',
 		priceBeforeSale: '',
 		sale: '',
 		saleMsg: '',
 	});
 	const route = useRoute();
-
-	hotelDetails.value.name = route.query.name;
-	hotelDetails.value.img = route.query.img;
-	hotelDetails.value.reviewNumber = route.query.reviewNumber;
-	hotelDetails.value.id = route.query.id;
-	hotelDetails.value.reviewscore = route.query.reviewscore;
-	hotelDetails.value.desc = route.query.desc;
-	hotelDetails.value.lon = route.query.lon;
-	hotelDetails.value.lat = route.query.lat;
 
 	// handel int value
 	const intNum = (num) => {
@@ -233,6 +233,23 @@
 		return num;
 	};
 	// Notification icon handel
+
+	onMounted(() => {
+		hotelDetails.value.name = route.query.name;
+		hotelDetails.value.img = route.query.img;
+		hotelDetails.value.reviewNumber = route.query.reviewNumber;
+		hotelDetails.value.id = route.query.id;
+		hotelDetails.value.reviewscore = route.query.reviewscore;
+		hotelDetails.value.desc = route.query.desc;
+		hotelDetails.value.lon = route.query.lon;
+		hotelDetails.value.lat = route.query.lat;
+		hotelDetails.value.price = route.query.price;
+		hotelDetails.value.checkin = route.query.checkin;
+		hotelDetails.value.checkout = route.query.checkout;
+		localStorage.setItem('hotelDetails', JSON.stringify(hotelDetails.value));
+		taskStore.storeHotelDatawithroom(hotelData.value);
+		getdatahotel();
+	});
 	const notWColor = ref(true);
 </script>
 

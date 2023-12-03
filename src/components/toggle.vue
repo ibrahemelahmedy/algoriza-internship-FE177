@@ -21,11 +21,13 @@
 </template>
 
 <script setup>
-	import { ref, defineEmits } from 'vue';
+	import { ref, defineEmits, onMounted } from 'vue';
 	import { Switch } from '@headlessui/vue';
 	const emits = defineEmits(['toggleResult']);
 	const enabled = ref(false);
+
 	const sendToggleState = () => {
+		enabled.value = !enabled.value;
 		emits('toggleResult', enabled.value);
 	};
 </script>

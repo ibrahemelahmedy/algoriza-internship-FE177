@@ -18,7 +18,7 @@
 
 						<input
 							v-model="badgetResult"
-							@click="handleFilterByPrice(badget.min, badget.max)"
+							@click="maxMinValue(badget.min, badget.max)"
 							class="absolute opacity-0"
 							type="radio"
 							:value="badget.value"
@@ -35,20 +35,40 @@
 			<div class="create-badget">
 				<div class="toggle-badget-paet flex items-center justify-between my-3">
 					<p class="p-text">Set your own budget</p>
+					<!-- want to handle toggle when use upper range to disable -->
 					<toggle @toggleResult="toggleResult"></toggle>
 				</div>
-				<div class="max-min flex justify-between gap-9 mb-[19px]">
+				<div class="max-min flex justify-between gap-3 mb-[19px]">
 					<input
 						:readonly="!enable"
+						v-model.trim="minInput"
+						@blur="checkMin"
 						class="border w-[90px] pl-3 pt-[11px] pb-3"
-						type="text"
+						type="number"
 						placeholder="Min budget" />
 					<input
 						:readonly="!enable"
+						v-model.trim="maxInput"
+						@blur="checkMax"
 						class="border w-[90px] pl-3 pt-[11px] pb-3"
-						type="text"
+						type="number"
 						placeholder="Max budget" />
+					<button
+						class="btn p-1"
+						@click="sendPrice"
+						>search</button
+					>
 				</div>
+				<p
+					class="text-[10px] text-red-500 whitespace-nowrap"
+					v-if="noteMsg"
+					>right Max budget and it's must be begger than min budget</p
+				>
+				<p
+					class="text-[10px] text-red-500 whitespace-nowrap"
+					v-if="!PriceValid"
+					>this Value not valid</p
+				>
 			</div>
 		</div>
 	</div>
@@ -57,8 +77,8 @@
 <script setup>
 	import toggle from '../../../components/toggle.vue';
 	import { ref } from 'vue';
+
 	const badgetResult = ref('');
-	const enable = ref(false);
 	const badgets = ref([
 		{ value: '$ 0- $ 200', min: 0, max: 200, num: '200', id: '1' },
 		{ value: '$ 200 - $ 500', min: 200, max: 500, num: '100', id: '2' },
@@ -66,15 +86,51 @@
 		{ value: '$ 1,000 - $ 2,000', min: 1000, max: 2000, num: '12', id: '4' },
 		{ value: '$ 2,000 - $ 5,000', min: 2000, max: 5000, num: '230', id: '5' },
 	]);
-	// get togle action
-	const toggleResult = (result) => {
-		console.log(result);
-		enable.value = result;
-		console.log(enable.value);
+	const PriceValid = ref(true);
+	const noteMsg = ref(false);
+	const maxInput = ref('');
+	const minInput = ref('');
+	const checkMin = () => {
+		noteMsg.value = false;
+		PriceValid.value = true;
+
+		if (+minInput.value > +maxInput.value) {
+			PriceValid.value = true;
+			noteMsg.value = true;
+		} else {
+			PriceValid.value = false;
+		}
 	};
-	const handleFilterByPrice = (min, max) => {
-		console.log(min);
-		console.log(max);
+
+	const checkMax = () => {
+		noteMsg.value = false;
+		PriceValid.value = true;
+
+		if (+minInput.value < +maxInput.value) {
+			PriceValid.value = true;
+			noteMsg.value = false;
+		} else {
+			PriceValid.value = false;
+		}
+	};
+	const sendPrice = () => {
+		if (+minInput.value < +maxInput.value) {
+			maxMinValue(minInput.value, maxInput.value);
+		} else {
+			PriceValid.value = false;
+		}
+	};
+
+	// get togle action
+	const enable = ref(false);
+
+	const toggleResult = (result) => {
+		enable.value = result;
+	};
+	const emits = defineEmits(['maxMinValue']);
+	const maxMinValue = (min, max) => {
+		enable.value = false;
+		emits('maxMinValue', min, max);
 	};
 </script>
 

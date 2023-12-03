@@ -14,13 +14,15 @@
 					:key="numberOfRating">
 					<label
 						class="containers block p-text cursor-pointer"
-						:for="numberOfRating.num">
+						:for="numberOfRating.id">
 						<input
+							v-model="getrate"
+							@click="sendRate(numberOfRating.num)"
 							class="absolute opacity-0 cursor-pointer"
 							type="radio"
-							value="rate"
+							:value="numberOfRating.num"
 							name="rate"
-							:id="numberOfRating.num" />
+							:id="numberOfRating.id" />
 						{{ numberOfRating.num }}
 						<span
 							class="checkmark absolute top-0 left-0 h-full w-full bg-transparent border cursor-pointer"></span>
@@ -36,25 +38,37 @@
 </template>
 
 <script setup>
-	import { computed, ref } from 'vue';
+	import { ref } from 'vue';
 
 	const numbersOfRating = ref([
 		{
-			num: '1',
+			id: 12,
+			num: 1,
 		},
 		{
-			num: '2',
+			id: 22,
+			num: 2,
 		},
 		{
-			num: '3',
+			id: 33,
+			num: 3,
 		},
 		{
-			num: '4',
+			id: 44,
+			num: 4,
 		},
 		{
-			num: '5',
+			id: 55,
+			num: 5,
 		},
 	]);
+
+	const getrate = ref(null);
+	const emits = defineEmits(['searchRate']);
+
+	const sendRate = (result) => {
+		emits('searchRate', result);
+	};
 </script>
 
 <style scoped>

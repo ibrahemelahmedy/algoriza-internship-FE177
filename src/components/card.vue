@@ -4,10 +4,10 @@
 	<section
 		v-for="hotel in hotels"
 		:key="hotel"
-		class="card flex flex-col lg:flex-row min-h-fit h-[550px] lg:h-[230px] lg:max-h-[240px] w-[216px] lg:max-w-full lg:w-[750px] border gap-6 p-3 rounded-md mb-[24px]">
+		class="card flex flex-col lg:flex-row min-h-fit h-[550px] lg:h-[230px] lg:max-h-[240px] w-[216px] lg:max-w-full lg:w-full border gap-6 p-3 rounded-md mb-[24px]">
 		<div class="image"
 			><img
-				class="rounded-md w-[200px] lg:h-[200px] lg:max-w-[285px] w-full"
+				class="rounded-md w-[200px] lg:h-[200px] lg:max-w-[285px]"
 				:src="hotel.property.photoUrls[0]"
 				alt="hotel image"
 		/></div>
@@ -94,6 +94,7 @@
 					class="btn px-4 py-[6px] h-fit"
 					>See availability
 				</button>
+				<p>{{ hotel.property.reviewCount }}</p>
 
 				<div class="prices text-center mb-3 lg:mb-0">
 					<div
@@ -121,8 +122,8 @@
 	import { useRouter } from 'vue-router';
 
 	const { hotels, isAuth } = defineProps(['hotels', 'isAuth']);
+
 	const router = useRouter();
-	// console.log(hotels[0].property.photoUrls);
 
 	// return integer number
 	const intNum = (num) => {
@@ -143,7 +144,7 @@
 	const redirectHotelDetails = (id, hotel) => {
 		router.push({
 			name: 'hotelDetails',
-			params: { id: id },
+			params: { hotelId: id },
 			query: {
 				id: hotel.hotel_id,
 				img: hotel.property.photoUrls[0],
@@ -153,6 +154,29 @@
 				reviewNumber: hotel.property.reviewCount,
 				reviewscore: hotel.property.reviewScore,
 				price: hotel.property.priceBreakdown.grossPrice.value,
+				checkin: hotel.property.checkinDate,
+				checkout: hotel.property.checkoutDate,
+				// priceBeforeSale:
+				// 	hotel.property.priceBreakdown.strikethroughPrice.value || '0',
+				lon: hotel.property.longitude,
+				lat: hotel.property.latitude,
+
+				sale: hotel.sale,
+				saleMsg: hotel.saleMsg,
+
+				isAuth,
+			},
+			query: {
+				id: hotel.hotel_id,
+				img: hotel.property.photoUrls[0],
+				name: hotel.property.name,
+				title: hotel.title,
+				desc: hotel.accessibilityLabel,
+				reviewNumber: hotel.property.reviewCount,
+				reviewscore: hotel.property.reviewScore,
+				price: hotel.property.priceBreakdown.grossPrice.value,
+				checkin: hotel.property.checkinDate,
+				checkout: hotel.property.checkoutDate,
 				// priceBeforeSale:
 				// 	hotel.property.priceBreakdown.strikethroughPrice.value || '0',
 				lon: hotel.property.longitude,

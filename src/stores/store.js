@@ -2,7 +2,7 @@
 
 import { defineStore } from 'pinia';
 const headerKey = {
-	'X-RapidAPI-Key': 'f17592ae15mshe99f08d9ed5bec8p16677bjsneb10997c1e34',
+	'X-RapidAPI-Key': '7b9b8ead17msh82d1fe249f33d52p15fac2jsnf1d588f958de',
 	'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
 };
 export const useTaskStore = defineStore('taskStore', {
@@ -14,7 +14,7 @@ export const useTaskStore = defineStore('taskStore', {
 			adults: '',
 			room_qty: '',
 			sort_id: null,
-			page_number: '',
+			page_number: null,
 			price_min: '',
 			price_max: '',
 		},
@@ -61,6 +61,10 @@ export const useTaskStore = defineStore('taskStore', {
 		storeHotelDatawithroom(data) {
 			this.hotelsRoomData.push(data);
 			return this.hotelsRoomData;
+		},
+		getPriceRang(min, max) {
+			this.hotels.price_min = min;
+			this.hotels.price_max = max;
 		},
 
 		async egyptCities() {
