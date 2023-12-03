@@ -72,19 +72,21 @@
 				</div>
 			</section>
 		</article>
-		<pagination :totalHotelsNumber="totalHotelsNumber" />
-
+		<!-- <paginationTemplate :totalHotelsNumber="totalHotelsNumber" /> -->
+		<Pagination @getPage="getPage"></Pagination>
 		<worningLetter />
 		<theFooter />
 	</main>
 </template>
 
 <script setup>
+	import Pagination from './component/pagination.vue';
+
 	import theHeader from '../../components/theHeader.vue';
 	import navLink from '../../components/navLink.vue';
 	import card from '../../components/card.vue';
 	import sortBy from './component/sortBy.vue';
-	import pagination from '../../components/pagination.vue';
+	// import pagination from '../../components/pagination.vue';
 	import worningLetter from '../../components/worningletter.vue';
 	import theFooter from '../../components/theFooter.vue';
 	import searchBar from '../../components/searchbar.vue';
@@ -93,9 +95,10 @@
 	import rating from './component/rating.vue';
 
 	import { useRoute } from 'vue-router';
-	import { onMounted, ref, watch, watchEffect } from 'vue';
+	import { onMounted, onUpdated, ref, watch, watchEffect } from 'vue';
 	import { useTaskStore } from '../../stores/store';
 	const taskStore = useTaskStore();
+	const route = useRoute();
 	const hotelsSearchDetails = ref({});
 	const sortValue = ref('');
 	const isAuth = localStorage.getItem('isAuth');
@@ -111,11 +114,20 @@
 	// Notification icon color handel
 	const notWColor = ref(false);
 
-	// const currentPage = ref(1);
-	// const perPage = ref('');
-	// const total = ref('');
+	// padination
+	const currentPage = ref(1);
+	const totalHotelsNumber = ref(null);
+	const perPage = ref(20);
+	const pageChange = (pageNumber) => {
+		currentPage.value = pageNumber;
+	};
 
-	const route = useRoute();
+	const getPage = () => {
+		if (localStorage.getItem('currentPage')) {
+			currentPage.value = JSON.parse(localStorage.getItem('currentPage'));
+			taskStore.getPageNumber(currentPage.value);
+		}
+	};
 	// sortby
 	const sortByReco = ref([]);
 	const dataSortBy = async () => {
@@ -134,18 +146,21 @@
 	const hotelsBase = ref([]);
 
 	const meta = ref([]);
-	const totalHotelsNumber = ref(null);
 
 	const dataHotels = async () => {
 		const data = JSON.parse(await taskStore.getHotels());
 		if (data.data?.meta) {
 			meta.value.push(data.data.meta[0]?.title);
 			totalHotelsNumber.value = +data.data.meta[0]?.title.split(' ')[0];
+			localStorage.setItem('totalHotels', totalHotelsNumber.value);
 		}
 
 		if (data.data) {
 			hotelsBase.value = data.data.hotels;
 			hotels.value = data.data.hotels;
+			if (hotelsBase.value) {
+				taskStore.getAllHotels(hotelsBase.value);
+			}
 		}
 	};
 
@@ -188,7 +203,7 @@
 		// call hotel storage
 		dataHotels(); //stoped to handel lower api request
 		// get sort data
-		// dataSortBy(); //stoped to handel lower api request
+		dataSortBy(); //stoped to handel lower api request
 	});
 
 	const maxPrice = ref(null);

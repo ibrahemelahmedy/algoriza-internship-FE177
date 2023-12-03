@@ -8,10 +8,16 @@ import payment from '../views/payment/payment.vue';
 import myTrips from '../views/trips/myTrips.vue';
 import signIn from '../views/auth/signIn.vue';
 import register from '../views/auth/register.vue';
+import notFound from '../views/notFound.vue';
 let Auth = localStorage.getItem('isAuth');
 const router = createRouter({
 	history: createWebHistory(),
 	routes: [
+		{
+			path: '/:notFound(.*)',
+			name: 'notFound',
+			component: notFound,
+		},
 		{
 			path: '/',
 			name: 'home',

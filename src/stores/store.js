@@ -1,10 +1,12 @@
 /** @format */
 
+// import { stat } from 'fs';
 import { defineStore } from 'pinia';
 const headerKey = {
-	'X-RapidAPI-Key': '7b9b8ead17msh82d1fe249f33d52p15fac2jsnf1d588f958de',
+	'X-RapidAPI-Key': '5adfe9b97emshc8a769ee163c22fp1fc81djsn2a56ce76e8a8',
 	'X-RapidAPI-Host': 'booking-com15.p.rapidapi.com',
 };
+
 export const useTaskStore = defineStore('taskStore', {
 	state: () => ({
 		cityHotels: {
@@ -21,6 +23,7 @@ export const useTaskStore = defineStore('taskStore', {
 		hotel_id: '',
 		hotels: [],
 		hotelsRoomData: [],
+		allhotels: [],
 	}),
 
 	getters: {
@@ -42,9 +45,16 @@ export const useTaskStore = defineStore('taskStore', {
 			state.hotelsRoomData = [];
 			return state.hotelsRoomData;
 		},
+		sendAllHotels(state) {
+			return state.allhotels;
+		},
 	},
 
 	actions: {
+		getAllHotels(data) {
+			this.allhotels.push(data);
+			return this.allhotels;
+		},
 		storeCityHotelData(data) {
 			this.cityHotels = data;
 			return this.cityHotels;
@@ -65,6 +75,10 @@ export const useTaskStore = defineStore('taskStore', {
 		getPriceRang(min, max) {
 			this.hotels.price_min = min;
 			this.hotels.price_max = max;
+		},
+		getPageNumber(data) {
+			this.cityHotels.page_number = data;
+			return this.cityHotels.page_number;
 		},
 
 		async egyptCities() {
@@ -103,7 +117,19 @@ export const useTaskStore = defineStore('taskStore', {
 		async getHotels() {
 			try {
 				const responsive = await fetch(
-					`https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${this.cityHotels.dest_id}&search_type=CITY&arrival_date=${this.cityHotels.arrival_date}&departure_date=${this.cityHotels.departure_date}&adults=${this.cityHotels.adults}&children_age=0%2C17&room_qty=${this.cityHotels.room_qty}&page_number=1&price_min=${this.cityHotels.price_min}&price_max=${this.cityHotels.price_max}&sort_by=${this.cityHotels.sort_id}&languagecode=en-us&currency_code=AED`,
+					`https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=${
+						this.cityHotels.dest_id
+					}&search_type=CITY&arrival_date=${
+						this.cityHotels.arrival_date
+					}&departure_date=${this.cityHotels.departure_date}&adults=${
+						this.cityHotels.adults
+					}&children_age=0%2C17&room_qty=${
+						this.cityHotels.room_qty
+					}&page_number=${this.cityHotels.page_number || 1}&price_min=${
+						this.cityHotels.price_min
+					}&price_max=${this.cityHotels.price_max}&sort_by=${
+						this.cityHotels.sort_id
+					}&languagecode=en-us&currency_code=AED`,
 					{
 						method: 'GET',
 						headers: headerKey,
